@@ -6,6 +6,18 @@ const routes = [
 		path: "/",
 		name: "index",
 		component: Index,
+		children: [
+			{
+				path: "/",
+				name: "home",
+				redirect: "/chatroom/1",
+			},
+			{
+				path: "/chatroom/:id",
+				name: "chatroom",
+				component: () => import("@/view/index/chatWindow.vue"),
+			},
+		],
 	},
 	{
 		path: "/register",
