@@ -1,7 +1,15 @@
 <script setup></script>
 
 <template>
-	<h1>我是登录页</h1>
+	<div class="main">
+		<div class="left"></div>
+		<div class="right">
+			<img src="../../assets/images/bg.png" alt="" />
+		</div>
+	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main {
+}
+</style>

@@ -11,12 +11,12 @@ export default defineConfig({
 		},
 	},
 	css: {
-		// css预处理器
 		preprocessorOptions: {
 			scss: {
-				// 定义全局的scss变量
-				// 给导入的路径最后加上 ;
-				additionalData: `@import '@/styles/common.scss';`,
+				// 自动导入定制化样式文件进行样式覆盖
+				additionalData: `
+				@use "@/assets/style/var.scss" as *;
+			`,
 			},
 		},
 	},
