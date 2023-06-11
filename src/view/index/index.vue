@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-	<h1>我是index页</h1>
+	<div class="main"></div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

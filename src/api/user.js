@@ -11,7 +11,7 @@ export function login(user) {
 // 注册
 export function register(user) {
 	return request({
-		url: "/chatUser/login",
+		url: "/chatUser/register",
 		method: "post",
 		data: user,
 	});
