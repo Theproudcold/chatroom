@@ -10,4 +10,14 @@ export default defineConfig({
 			"@": fileURLToPath(new URL("./src", import.meta.url)),
 		},
 	},
+	css: {
+		// css预处理器
+		preprocessorOptions: {
+			scss: {
+				// 定义全局的scss变量
+				// 给导入的路径最后加上 ;
+				additionalData: `@import '@/styles/common.scss';`,
+			},
+		},
+	},
 });

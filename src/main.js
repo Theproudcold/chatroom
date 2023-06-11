@@ -1,8 +1,10 @@
 import { createApp } from "vue";
-import "./style.css";
 // 引入路由
 import router from "./router";
 import App from "./App.vue";
+// 引入 pinia
+import { createPinia } from "pinia";
+import piniaPluginPersist from "pinia-plugin-persist";
 const pinia = createPinia();
 
 pinia.use(piniaPluginPersist);
