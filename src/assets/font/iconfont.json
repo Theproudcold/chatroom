@@ -1,0 +1,37 @@
+{
+  "id": "4116022",
+  "name": "聊天室",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1304892",
+      "name": "右箭头",
+      "font_class": "youjiantou",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "5117600",
+      "name": "发送-色块icon",
+      "font_class": "icon",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "10085909",
+      "name": "表情",
+      "font_class": "biaoqing",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "26082658",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    }
+  ]
+}

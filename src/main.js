@@ -7,6 +7,8 @@ import { createPinia } from "pinia";
 import piniaPluginPersist from "pinia-plugin-persist";
 // 引入初始化样式文件
 import "@/assets/style/common.scss";
+// 引入字体图标
+import "@/assets/font/iconfont.css";
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersist);
