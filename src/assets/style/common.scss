@@ -17,10 +17,12 @@ html,body {
 .main {
 	width: 100%;
 	height: 100vh;
-	background: linear-gradient(
-		180deg,
-		#bcdfff 0%,
-		#d5ebff 0.01%,
-		#6888c4 98.65%
-	);
+	background: $mianBgColor;
+	.window {
+		display: flex;
+		width: 80rem;
+		height: 37.5rem;
+		border-radius: 1.875rem;
+		overflow: hidden;
+	}
 }
