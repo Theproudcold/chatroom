@@ -1,6 +1,32 @@
 <script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { login } from "@/api/user";
+import { mainStore } from "@/store/index";
+const router = useRouter();
+const msg = ref(""); //信息提示
+// 进行登录操作
+const store = mainStore();
+const goLogin = async () => {
+	const res = await login(user.value);
+	if (res.code == 400 || res.code == 402) {
+		msg.value = res.msg;
+	}
+	if (res.code == 200) {
+		store.$patch((state) => {
+			state.token = res.data.token;
+		});
+		router.push("/");
+	}
+};
 // 前往注册页
-const goReg = () => {};
+const goRegister = () => {
+	router.push("/register");
+};
+const user = ref({
+	userName: "",
+	password: "",
+});
 </script>
 
 <template>
@@ -9,13 +35,22 @@ const goReg = () => {};
 			<div class="left">
 				<div class="login">
 					<h1 class="title">登录</h1>
-					<input class="inputs" placeholder="账号" type="text" />
-					<input class="inputs" placeholder="密码" type="password" />
+					<input
+						v-model="user.userName"
+						class="inputs"
+						placeholder="账号"
+						type="text" />
+					<input
+						v-model="user.password"
+						class="inputs"
+						placeholder="密码"
+						type="password" />
+					<p class="msg" v-if="msg">{{ msg }}</p>
 					<p class="forget">忘记密码</p>
-					<div class="button">
+					<div class="button" @click="goLogin">
 						<i class="iconfont icon-youjiantou"></i>
 					</div>
-					<p class="hint" @click="goReg">没有账号？点击注册</p>
+					<p class="hint" @click="goRegister">没有账号？点击注册</p>
 				</div>
 			</div>
 			<div class="right">
@@ -81,6 +116,10 @@ const goReg = () => {};
 					border: none;
 					background-color: transparent;
 					border-bottom: 1px solid $fontColor !important;
+				}
+				.msg {
+					font-size: 14px;
+					color: $errorColor;
 				}
 				.forget {
 					font-size: 12px;
