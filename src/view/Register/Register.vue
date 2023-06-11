@@ -162,7 +162,7 @@ const rule = ref("");
 		background-color: $secondaryColor;
 		position: absolute;
 		top: 50%;
-		left: --6.25rem;
+		left: -6.25rem;
 		transform: translate(0, -50%);
 		display: block;
 		width: 25rem;
