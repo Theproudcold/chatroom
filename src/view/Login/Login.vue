@@ -8,6 +8,10 @@ const msg = ref(""); //信息提示
 // 进行登录操作
 const store = mainStore();
 const goLogin = async () => {
+	if (user.value.userName == "" || user.value.password == "") {
+		msg.value = "不能输入空";
+		return;
+	}
 	const res = await login(user.value);
 	if (res.code == 400 || res.code == 402) {
 		msg.value = res.msg;
