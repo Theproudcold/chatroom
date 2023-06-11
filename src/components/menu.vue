@@ -1,8 +1,8 @@
 <script setup>
 const user = {
-	avatar: "",
+	avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
 	nickname: "光头强",
-	description: "我是神",
+	description: "这个人很懒，没有留下什么简介...",
 };
 </script>
 
@@ -11,7 +11,6 @@ const user = {
 		<div class="header">
 			<div class="user">
 				<div class="user-img">
-					<h1>我是头像</h1>
 					<img :src="user.avatar" alt="" />
 				</div>
 				<div class="user-info">
@@ -36,12 +35,24 @@ const user = {
 .menu {
 	width: 100%;
 	height: 100%;
-	padding: 20px;
+	padding: 1.25rem;
 	.header {
 		.user {
 			display: flex;
 			justify-content: center;
+			align-items: center;
+			.user-img {
+				width: 4.875rem;
+				height: 4.875rem;
+				border-radius: 50%;
+				overflow: hidden;
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
 			.user-info {
+				margin-top: 1rem;
 				margin-left: 1.125rem;
 				.nickname {
 					width: 7.1875rem;
@@ -53,7 +64,7 @@ const user = {
 					color: $fontColor;
 				}
 				.description {
-					margin-top: 18px;
+					margin-top: 0.8125rem;
 					width: 8.1875rem;
 					height: 1.625rem;
 					font-size: 0.625rem;
@@ -72,8 +83,8 @@ const user = {
 			align-items: center;
 			color: $mainColor;
 			font-weight: 700;
-			font-size: 14px;
-			line-height: 18px;
+			font-size: 0.875rem;
+			line-height: 1.125rem;
 			letter-spacing: 0.4em;
 			border-radius: 1rem;
 			cursor: pointer;

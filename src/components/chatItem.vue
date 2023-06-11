@@ -45,8 +45,8 @@ const props = defineProps({
 	margin-top: 1.5rem;
 	display: flex;
 	.left {
-		width: 43px;
-		height: 43px;
+		width: 2.6875rem;
+		height: 2.6875rem;
 		border-radius: 50%;
 		background-color: #333;
 	}
@@ -54,9 +54,9 @@ const props = defineProps({
 		margin-left: 0.625rem;
 		width: 23.9375rem;
 		.header {
-			height: 16px;
-			font-size: 12px;
-			line-height: 16px;
+			height: 1rem;
+			font-size: 0.75rem;
+			line-height: 1rem;
 			margin-bottom: 0.375rem;
 			letter-spacing: 0.2em;
 			color: $fontColor;

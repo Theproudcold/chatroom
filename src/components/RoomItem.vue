@@ -56,14 +56,14 @@ const props = defineProps({
 			justify-content: space-between;
 			.room-name {
 				font-weight: 500;
-				font-size: 14px;
-				line-height: 18px;
+				font-size: 0.875rem;
+				line-height: 1.125rem;
 				letter-spacing: 0.1em;
 				color: $fontColor;
 			}
 			.time {
-				font-size: 10px;
-				line-height: 13px;
+				font-size: 0.625rem;
+				line-height: 0.8125rem;
 				letter-spacing: 0.1em;
 				color: $secondaryColor;
 			}
@@ -77,8 +77,8 @@ const props = defineProps({
 				text-overflow: ellipsis;
 				white-space: nowrap;
 				overflow: hidden;
-				font-size: 10px;
-				line-height: 13px;
+				font-size: 0.625rem;
+				line-height: 0.8125rem;
 				letter-spacing: 0.1em;
 				color: $navFont;
 			}

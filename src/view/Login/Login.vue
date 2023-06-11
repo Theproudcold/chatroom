@@ -83,18 +83,18 @@ const user = ref({
 		height: 32.01375rem;
 		background: rgba(255, 255, 255, 0.6);
 		border-radius: 10%;
-		padding: 28px;
+		padding: 1.75rem;
 		.title {
-			font-size: 24px;
+			font-size: 1.5rem;
 			font-weight: 600;
-			padding: 20px 0;
+			padding: 1.25rem 0;
 			letter-spacing: 0.1em;
 			color: $secondaryColor;
 		}
 		.inputs {
 			width: 100%;
-			height: 45px;
-			margin: 10px 0;
+			height: 2.8125rem;
+			margin: 0.625rem 0;
 			&::-webkit-input-placeholder {
 				color: $fontColor;
 			}
@@ -102,14 +102,14 @@ const user = ref({
 			outline: none;
 			border: none;
 			background-color: transparent;
-			border-bottom: 1px solid $fontColor !important;
+			border-bottom: 0.0625rem solid $fontColor !important;
 		}
 		.msg {
-			font-size: 14px;
+			font-size: 0.875rem;
 			color: $errorColor;
 		}
 		.forget {
-			font-size: 12px;
+			font-size: 0.75rem;
 			text-align: right;
 			cursor: pointer;
 			letter-spacing: 0.2em;
@@ -129,7 +129,7 @@ const user = ref({
 			cursor: pointer;
 			background-color: $fontColor;
 			i {
-				font-size: 24px;
+				font-size: 1.5rem;
 			}
 		}
 		.hint {
@@ -138,9 +138,9 @@ const user = ref({
 			height: 1.25rem;
 			bottom: 1.75rem;
 			text-align: center;
-			font-size: 12px;
+			font-size: 0.75rem;
 			cursor: pointer;
-			line-height: 16px;
+			line-height: 1rem;
 			letter-spacing: 0.2em;
 			margin: auto;
 			color: rgba($fontColor, 0.6);
@@ -157,10 +157,10 @@ const user = ref({
 		background-color: $secondaryColor;
 		position: absolute;
 		top: 50%;
-		left: -100px;
+		left: -6.25rem;
 		transform: translate(0, -50%);
 		display: block;
-		width: 400px;
+		width: 25rem;
 		height: 140%;
 		border-radius: 50%;
 	}
@@ -183,11 +183,11 @@ const user = ref({
 		}
 		.title {
 			margin-top: 1.75rem;
-			width: 288px;
-			height: 52px;
+			width: 18rem;
+			height: 3.25rem;
 			font-weight: 700;
-			font-size: 40px;
-			line-height: 52px;
+			font-size: 2.5rem;
+			line-height: 3.25rem;
 			letter-spacing: 0.0125rem;
 			color: #ffffff;
 		}
