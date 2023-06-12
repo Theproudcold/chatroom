@@ -1,8 +1,13 @@
 <script setup>
+import { ref } from "vue";
+import UserMask from "@/components/UserMask.vue";
+import { mainStore } from "@/store/index";
+const store = mainStore();
 const user = {
 	avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	nickname: "光头强",
-	description: "这个人很懒，没有留下什么简介...",
+	nickname: "光头强光头强aaa",
+	description:
+		"这个人很懒，没有留下什么简介这个人很懒，没有留下什么简介这个人很懒，没有留下什么简介...这个人很懒，没有留下什么简介...这个人很懒，没有留下什么简介...这个人很懒，没有留下什么简介...",
 };
 </script>
 
@@ -14,7 +19,14 @@ const user = {
 					<img :src="user.avatar" alt="" />
 				</div>
 				<div class="user-info">
-					<h3 class="nickname">{{ user.nickname }}</h3>
+					<div class="info-header">
+						<h3 class="nickname">{{ user.nickname }}</h3>
+						<div
+							class="edit myCenter"
+							@click="store.showMask = true">
+							<span>修改</span>
+						</div>
+					</div>
 					<p class="description">{{ user.description }}</p>
 				</div>
 			</div>
@@ -28,6 +40,7 @@ const user = {
 		<div class="bottom">
 			<p><i class="iconfont icon-tuichu"></i>退出聊天室</p>
 		</div>
+		<UserMask></UserMask>
 	</div>
 </template>
 
@@ -38,6 +51,7 @@ const user = {
 	padding: 1.25rem;
 	.header {
 		.user {
+			cursor: pointer;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -54,14 +68,30 @@ const user = {
 			.user-info {
 				margin-top: 1rem;
 				margin-left: 1.125rem;
-				.nickname {
-					width: 7.1875rem;
-					height: 1.9375rem;
-					font-weight: 700;
-					font-size: 1.5rem;
-					line-height: 1.9375rem;
-					letter-spacing: 0.2em;
-					color: $fontColor;
+				.info-header {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					.nickname {
+						width: 7.1875rem;
+						height: 1.9375rem;
+						font-weight: 700;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+						font-size: 1rem;
+						line-height: 1.9375rem;
+						color: $fontColor;
+					}
+					.edit {
+						width: 2.6875rem;
+						height: 1.1875rem;
+						font-size: 0.75rem;
+						border-radius: 0.375rem;
+						color: $mainColor;
+						cursor: pointer;
+						background-color: $secondaryColor;
+					}
 				}
 				.description {
 					margin-top: 0.8125rem;
@@ -71,6 +101,10 @@ const user = {
 					line-height: 0.8125rem;
 					letter-spacing: 0.1em;
 					color: #a8a8a8;
+					display: -webkit-box; /* 设置为块级元素 */
+					-webkit-line-clamp: 2; /* 显示行数 */
+					-webkit-box-orient: vertical; /* 垂直排列 */
+					overflow: hidden; /* 隐藏超出范围的内容 */
 				}
 			}
 		}
@@ -105,6 +139,11 @@ const user = {
 			cursor: pointer;
 			color: $secondaryColor;
 		}
+	}
+	.mask {
+		width: 100vw;
+		height: 100vh;
+		background-color: #7f7f7f;
 	}
 }
 </style>

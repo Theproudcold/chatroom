@@ -22,6 +22,11 @@ const goLogin = async () => {
 			state.token = res.data.token;
 			console.log(res.data.token);
 		});
+		ElMessage({
+			showClose: true,
+			message: "登录成功",
+			type: "success",
+		});
 		router.push("/chat");
 	}
 };

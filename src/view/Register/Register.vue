@@ -19,7 +19,11 @@ const goRegister = async () => {
 		msg.value = res.msg;
 	}
 	if (res.code == 200) {
-		alert(res.msg);
+		ElMessage({
+			showClose: true,
+			message: res.msg,
+			type: "success",
+		});
 		goLogin();
 	}
 };

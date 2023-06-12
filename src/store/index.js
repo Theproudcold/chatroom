@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 export const mainStore = defineStore("main", {
 	state: () => ({
 		token: "",
+		showMask: false,
 	}),
 	getters: {},
 	actions: {
