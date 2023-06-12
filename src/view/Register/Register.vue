@@ -10,7 +10,7 @@ const goRegister = async () => {
 		msg.value = "不能输入空";
 		return;
 	}
-	if (user.value.password != rule) {
+	if (user.value.password != rule.value) {
 		msg.value = "两次输入密码不正确";
 		return;
 	}

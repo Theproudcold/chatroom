@@ -12,6 +12,7 @@ const goLogin = async () => {
 		msg.value = "不能输入空";
 		return;
 	}
+	console.log(user.value);
 	const res = await login(user.value);
 	if (res.code == 400 || res.code == 402) {
 		msg.value = res.msg;
@@ -19,8 +20,9 @@ const goLogin = async () => {
 	if (res.code == 200) {
 		store.$patch((state) => {
 			state.token = res.data.token;
+			console.log(res.data.token);
 		});
-		router.push("/");
+		router.push("/chat");
 	}
 };
 // 前往注册页
