@@ -41,7 +41,7 @@ const router = createRouter({
 });
 router.beforeEach((to, from, next) => {
 	const store = mainStore();
-	if (to.path === "/login" || store.token) {
+	if (to.path === "/login" || store.token || to.path === "/register") {
 		next();
 	} else {
 		next("/login");
