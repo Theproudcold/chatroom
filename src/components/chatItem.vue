@@ -1,23 +1,27 @@
 <script setup>
+import { mainStore } from "@/store/index";
+import { onMounted } from "vue";
+const store = mainStore();
 const props = defineProps({
-	myselfe: {
-		Ttpe: Boolean,
-		default: false,
+	item: {
+		Type: Object,
+	},
+	myselfy: {
+		Type: Boolean,
 	},
 });
 </script>
 
 <template>
-	<div class="chat-item" :class="{ myselfe: myselfe }">
+	<div class="chat-item" :class="{ myselfe: store.user.id == item.userId }">
 		<div class="left">
 			<img src="" alt="" />
 		</div>
 		<div class="right">
-			<div class="header">张三</div>
+			<div class="header">{{ item.nickname }}</div>
 			<div class="content">
 				<p>
-					我要当太空人我要当太空人我要当太空人我要当
-					太空人我要当太空人我要当太空人我要当太空人 我要当太空人
+					{{ item.content }}
 				</p>
 			</div>
 		</div>

@@ -3,6 +3,8 @@ export const mainStore = defineStore("main", {
 	state: () => ({
 		user: {},
 		showMask: false,
+		online: 0,
+		onlineUser: [],
 	}),
 	getters: {},
 	actions: {

@@ -2,7 +2,11 @@
 import Menu from "@/components/menu.vue";
 import MemberItem from "@/components/memberItem.vue";
 import RoomItem from "@/components/RoomItem.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { Rooms } from "@/api/rooms";
+import { mainStore } from "@/store/index";
+
+const store = mainStore();
 const rooms = [
 	{
 		id: 1,
@@ -84,6 +88,12 @@ const user = [
 		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
 	},
 ];
+// 获取聊天室列表
+const getRooms = async () => {
+	const res = await Rooms();
+	console.log(res);
+};
+// 前往对应聊天室
 const toRooms = (item) => {
 	selectRooms.value = item.id;
 };
@@ -112,10 +122,13 @@ selectRooms.value = rooms[0].id;
 				<div class="header">
 					<span class="online-icon"></span>
 					<p class="online-title">在线成员</p>
-					<h4 class="online-number">123</h4>
+					<h4 class="online-number">{{ store.online }}</h4>
 				</div>
 				<div class="member-list">
-					<MemberItem v-for="item in user" :key="item" :user="item" />
+					<MemberItem
+						v-for="item in store.onlineUser"
+						:key="item"
+						:user="item" />
 				</div>
 			</div>
 		</div>

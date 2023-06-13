@@ -1,32 +1,94 @@
 <script setup>
 import ChatItem from "@/components/chatItem.vue";
-import { nextTick, onMounted, ref } from "vue";
-const content = ref(null);
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { mainStore } from "@/store/index";
+import { onlineUsers } from "@/api/user";
+import { useWebSocket } from "@/utils/websocket";
+const content1 = ref(null);
+const store = mainStore();
+// 创建 WebSocket 客户端实例
+// WebSocket HTML5提供的内置对象
+
+const ws = useWebSocket(handelMessage, store.user.id);
+
+ws.onmessage = function (event) {
+	const obj = JSON.parse(event.data);
+	store.online = obj.onlineCount;
+
+	if (obj.type && obj.type == 1) {
+		msgList.value.push(obj.data);
+	} else {
+		console.log(obj);
+		store.onlineUser.push(obj.data);
+	}
+};
+function handelMessage(e) {
+	const data = JSON.parse(e.data);
+	console.log(data);
+}
+const msgList = ref([]);
+ws.onopen = function () {
+	console.log("连接服务器成功");
+};
+const msg = ref("");
+function send() {
+	//发送消息
+	ws.send(
+		JSON.stringify({
+			content: msg.value,
+			userId: 1,
+			nickname: store.user.nickname,
+			sendTime: "2023-6-13 16:47",
+			chatRoomId: 1,
+		})
+	);
+	msgList.value.push({
+		content: msg.value,
+		userId: 1,
+		nickname: store.user.nickname,
+		sendTime: "2023-6-13 16:47",
+		chatRoomId: 1,
+		myselfy: true,
+	});
+	msg.value = "";
+}
 function scrollToBottom(type) {
 	// 滚动到 div 元素的底部
-	content.value.scrollTop = content.value.scrollHeight;
+	content1.value.scrollTop = content1.value.scrollHeight;
 	if (type == 1) {
-		content.value.style.scrollBehavior = "smooth";
+		content1.value.style.scrollBehavior = "smooth";
 	} else {
-		content.value.style.scrollBehavior = "";
+		content1.value.style.scrollBehavior = "";
 	}
 }
 const sendMsg = () => {
+	send();
 	scrollToBottom(1);
 };
+
 onMounted(() => {
 	scrollToBottom();
+});
+onBeforeUnmount(() => {
+	// 关闭 WebSocket 连接
+	if (ws !== null) {
+		ws.close();
+	}
 });
 </script>
 
 <template>
 	<div class="chat-window">
-		<div class="content" ref="content">
-			<ChatItem v-for="item in 10" :key="item"></ChatItem>
-			<ChatItem v-for="item in 2" myselfe="true" :key="item"></ChatItem>
+		<div class="content" ref="content1">
+			<ChatItem
+				v-for="item in msgList"
+				:item="item"
+				:myselfy="store.user.id"
+				:key="item"></ChatItem>
 		</div>
 		<div class="bottom">
 			<input
+				v-model="msg"
 				class="inputs"
 				placeholder="聊天时请注意文明用语"
 				type="text" />
