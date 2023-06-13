@@ -12,16 +12,16 @@ const goLogin = async () => {
 		msg.value = "不能输入空";
 		return;
 	}
-	console.log(user.value);
 	const res = await login(user.value);
 	if (res.code == 400 || res.code == 402) {
 		msg.value = res.msg;
 	}
 	if (res.code == 200) {
-		store.$patch((state) => {
-			state.token = res.data.token;
-			console.log(res.data.token);
-		});
+		// store.$patch((state) => {
+		// 	state.token = res.data.token;
+		// 	console.log(res.data.token);
+		// });
+		localStorage.setItem("token", res.data.token);
 		ElMessage({
 			showClose: true,
 			message: "登录成功",

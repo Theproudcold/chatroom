@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 export const mainStore = defineStore("main", {
 	state: () => ({
-		token: "",
+		user: {},
 		showMask: false,
 	}),
 	getters: {},
@@ -13,9 +13,9 @@ export const mainStore = defineStore("main", {
 		enabled: true,
 		strategies: [
 			{
-				key: "token",
+				key: "store",
 				storage: sessionStorage,
-				paths: ["token"], // 修改为正确的属性名
+				paths: ["user"], // 修改为正确的属性名
 			},
 		],
 	},

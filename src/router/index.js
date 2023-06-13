@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Index from "@/view/index/index.vue";
-import { mainStore } from "@/store/index";
 const routes = [
 	{
 		path: "/",
@@ -10,14 +9,10 @@ const routes = [
 		path: "/chat",
 		name: "index",
 		component: Index,
+		redirect: "/chat/chatroom/1", // 添加重定向
 		children: [
 			{
-				path: "/",
-				name: "home",
-				redirect: "/chatroom/1",
-			},
-			{
-				path: "/chatroom/:id",
+				path: "chatroom/:id",
 				name: "chatroom",
 				component: () => import("@/view/index/chatWindow.vue"),
 			},
@@ -40,8 +35,7 @@ const router = createRouter({
 	routes,
 });
 router.beforeEach((to, from, next) => {
-	const store = mainStore();
-	if (to.path === "/login" || store.token || to.path === "/register") {
+	if (to.path === "/login" || localStorage.token || to.path === "/register") {
 		next();
 	} else {
 		next("/login");

@@ -1,8 +1,33 @@
 <script setup>
 import { mainStore } from "@/store/index";
+import { updataUserInfo } from "@/api/user";
+import { ref } from "vue";
 const store = mainStore();
+// 退出
 const closure = () => {
 	store.showMask = false;
+};
+const emit = defineEmits(["upadta"]);
+const userInfo = ref({});
+userInfo.value = store.user;
+// 保存
+const keep = async () => {
+	const res = await updataUserInfo(userInfo.value);
+	if (res.code == 200) {
+		ElMessage({
+			showClose: true,
+			message: "修改成功",
+			type: "success",
+		});
+		emit("upadta");
+	} else {
+		ElMessage({
+			showClose: true,
+			message: "修改失败",
+			type: "error",
+		});
+	}
+	closure();
 };
 </script>
 <template>
@@ -20,15 +45,15 @@ const closure = () => {
 					<p class="upload">点击上传头像</p>
 				</div>
 				<div class="user-name">
-					<p>用户名</p>
-					<input type="text" />
+					<p class="title">用户名</p>
+					<input v-model="userInfo.nickname" type="text" />
 				</div>
-				<div class="user-name">
-					<p>个人简介</p>
-					<textarea name="" id="" cols="30" rows="10"></textarea>
+				<div class="user-info">
+					<p class="title">个人简介</p>
+					<textarea v-model="userInfo.description"></textarea>
 				</div>
 			</div>
-			<div class="button myCenter"><p>保存</p></div>
+			<div class="button myCenter" @click="keep"><p>保存</p></div>
 		</div>
 	</div>
 </template>
@@ -63,8 +88,65 @@ const closure = () => {
 			}
 		}
 		.modal-content {
+			.user-avatar {
+				display: flex;
+				align-items: center;
+				margin: 1.3125rem 0 1.6875rem 0;
+				.avatar {
+					width: 3.625rem;
+					height: 3.625rem;
+					background: $userBgColor;
+					border-radius: 50%;
+					overflow: hidden;
+					img {
+						display: block;
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.upload {
+					margin-left: 0.875rem;
+					height: 0.8125rem;
+					font-size: 0.625rem;
+					line-height: 0.8125rem;
+					letter-spacing: 0.1em;
+					color: $navFont;
+				}
+			}
+			.title {
+				height: 0.8125rem;
+				font-size: 0.625rem;
+				line-height: 0.8125rem;
+				letter-spacing: 0.2em;
+				color: $fontColor;
+				margin-bottom: 0.4375rem;
+			}
+			.user-name {
+				input {
+					width: 9.25rem;
+					height: 2.3125rem;
+					outline: none;
+					padding: 0.625rem;
+					border: 0.0625rem solid $navFont;
+					border-radius: 0.5625rem;
+				}
+			}
+			.user-info {
+				textarea {
+					width: 16.4375rem;
+					height: 5.875rem;
+					outline: none;
+					padding: 0.625rem;
+					border: 0.0625rem solid $navFont;
+					border-radius: 0.5625rem;
+					resize: none;
+				}
+			}
 		}
 		.button {
+			position: absolute;
+			bottom: 2.625rem;
+			right: 2.5625rem;
 			width: 4.375rem;
 			height: 2.0625rem;
 			border-radius: 0.75rem;

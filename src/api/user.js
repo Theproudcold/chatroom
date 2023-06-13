@@ -16,3 +16,23 @@ export function register(user) {
 		data: user,
 	});
 }
+// 修改用户信息
+export function updataUserInfo(userInfo) {
+	return request({
+		url: "/chatUser/updateUserInfo",
+		method: "post",
+		data: userInfo,
+	});
+}
+// 获取当前用户信息
+export function userInfo() {
+	return request({
+		url: "/chatUser/userInfo",
+	});
+}
+// 获取当前在线用户人数
+export function onlineUsers() {
+	return request({
+		url: "/chatUser/onlineUsers",
+	});
+}

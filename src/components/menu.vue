@@ -1,14 +1,20 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import UserMask from "@/components/UserMask.vue";
 import { mainStore } from "@/store/index";
+import { userInfo } from "@/api/user";
 const store = mainStore();
-const user = {
-	avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	nickname: "光头强光头强aaa",
-	description:
-		"这个人很懒，没有留下什么简介这个人很懒，没有留下什么简介这个人很懒，没有留下什么简介...这个人很懒，没有留下什么简介...这个人很懒，没有留下什么简介...这个人很懒，没有留下什么简介...",
+const user = ref({});
+const getUserInfo = async () => {
+	const res = await userInfo();
+	store.user = res.data;
+	user.value = store.user;
 };
+// 更新用户信息
+const upadta = () => {
+	getUserInfo();
+};
+onMounted(() => getUserInfo());
 </script>
 
 <template>
@@ -40,7 +46,7 @@ const user = {
 		<div class="bottom">
 			<p><i class="iconfont icon-tuichu"></i>退出聊天室</p>
 		</div>
-		<UserMask></UserMask>
+		<UserMask @upadta="upadta" :user="user"></UserMask>
 	</div>
 </template>
 

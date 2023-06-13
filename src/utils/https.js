@@ -9,6 +9,8 @@ const httpInstance = axios.create({
 // axios请求拦截器
 httpInstance.interceptors.request.use(
 	(config) => {
+		if (localStorage.token)
+			config.headers.Authorization = localStorage.token;
 		return config;
 	},
 	(e) => Promise.reject(e)
