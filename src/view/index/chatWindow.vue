@@ -4,9 +4,8 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
-
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
-
+const store = mainStore();
 const router = useRouter();
 
 onBeforeRouteUpdate((to, from, next) => {
@@ -24,7 +23,6 @@ onMounted(() => {
 	getUserInfo();
 });
 const content1 = ref(null);
-const store = mainStore();
 // 创建 WebSocket 客户端实例
 // WebSocket HTML5提供的内置对象
 const userId = store.user.id;
