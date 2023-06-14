@@ -26,68 +26,6 @@ const rooms = [
 	},
 ];
 
-const user = [
-	{
-		nickname: "光头强",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "任庆军",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-	{
-		nickname: "光头强",
-		avatar: "https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-	},
-];
 // 获取聊天室列表
 const getRooms = async () => {
 	const res = await Rooms();
@@ -99,6 +37,7 @@ const toRooms = (item) => {
 };
 const selectRooms = ref(0);
 selectRooms.value = rooms[0].id;
+onMounted(() => getRooms());
 </script>
 
 <template>

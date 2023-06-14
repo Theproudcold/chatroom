@@ -4,6 +4,18 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
+
+import { userInfo } from "@/api/user";
+
+const user = ref({});
+const getUserInfo = async () => {
+	const res = await userInfo();
+	store.user = res.data;
+	console.log(store.user);
+	user.value = store.user;
+};
+onMounted(() => getUserInfo());
+
 const content1 = ref(null);
 const store = mainStore();
 // 创建 WebSocket 客户端实例
@@ -14,8 +26,8 @@ const ws = useWebSocket(handelMessage, userId);
 
 ws.onmessage = function (event) {
 	const obj = JSON.parse(event.data);
+	console.log(event);
 	store.online = obj.onlineCount;
-	console.log(obj.data);
 	if (obj.type && obj.type == 1) {
 		msgList.value.push(obj.data);
 	} else {
@@ -38,12 +50,12 @@ function handelMessage(e) {
 const msgList = ref([]);
 ws.onopen = function () {
 	console.log("连接服务器成功");
-	getOnline();
+	// getOnline();
 };
-const getOnline = async () => {
-	const res = await onlineUsers();
-	console.log(res);
-};
+// const getOnline = async () => {
+// 	const res = await onlineUsers();
+// 	console.log(res);
+// };
 // let heartbeatInterval = setInterval(sendHeartbeat, 2000);
 const msg = ref("");
 // 监听连接关闭事件
@@ -53,7 +65,7 @@ ws.addEventListener("close", () => {
 });
 function send() {
 	//发送消息
-	getOnline();
+	// getOnline();
 	ws.send(
 		JSON.stringify({
 			nickname: store.user.nickname,
