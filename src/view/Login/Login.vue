@@ -1,10 +1,18 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { login } from "@/api/user";
+import { login, userInfo } from "@/api/user";
 import { mainStore } from "@/store/index";
 const router = useRouter();
 const msg = ref(""); //信息提示
+
+const getUserInfo = async () => {
+	const res = await userInfo();
+	store.user = res.data;
+	console.log(store.user);
+	user.value = store.user;
+};
+
 // 进行登录操作
 const store = mainStore();
 const goLogin = async () => {
@@ -27,6 +35,7 @@ const goLogin = async () => {
 			message: "登录成功",
 			type: "success",
 		});
+		getUserInfo();
 		router.push("/chat");
 	}
 };
