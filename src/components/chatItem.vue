@@ -54,7 +54,7 @@ const props = defineProps({
 	}
 	.right {
 		margin-left: 0.625rem;
-		width: 23.9375rem;
+		max-width: 16rem;
 		.header {
 			height: 1rem;
 			font-size: 0.75rem;
@@ -71,6 +71,9 @@ const props = defineProps({
 		color: $fontColor;
 		border-radius: 1.3125rem;
 		border-top-left-radius: 0;
+		p {
+			word-wrap: break-word;
+		}
 	}
 }
 </style>
