@@ -1,4 +1,5 @@
 <script setup>
+import { Rooms } from "@/api/rooms";
 const props = defineProps({
 	rooms: {
 		Type: Array,

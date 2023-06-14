@@ -2,18 +2,16 @@
 import { mainStore } from "@/store/index";
 import { onMounted } from "vue";
 const store = mainStore();
+const id = store.user.id;
 const props = defineProps({
 	item: {
 		Type: Object,
-	},
-	myselfy: {
-		Type: Boolean,
 	},
 });
 </script>
 
 <template>
-	<div class="chat-item" :class="{ myselfe: store.user.id == item.userId }">
+	<div class="chat-item" :class="{ myselfe: id == item.userId }">
 		<div class="left">
 			<img src="" alt="" />
 		</div>

@@ -8,13 +8,14 @@ const content1 = ref(null);
 const store = mainStore();
 // 创建 WebSocket 客户端实例
 // WebSocket HTML5提供的内置对象
-
-const ws = useWebSocket(handelMessage, store.user.id);
+const userId = store.user.id;
+console.log(userId);
+const ws = useWebSocket(handelMessage, userId);
 
 ws.onmessage = function (event) {
 	const obj = JSON.parse(event.data);
 	store.online = obj.onlineCount;
-
+	console.log(obj.data);
 	if (obj.type && obj.type == 1) {
 		msgList.value.push(obj.data);
 	} else {
@@ -26,29 +27,55 @@ function handelMessage(e) {
 	const data = JSON.parse(e.data);
 	console.log(data);
 }
+// // 发送心跳包
+// function sendHeartbeat() {
+// 	ws.send(
+// 		JSON.stringify({
+// 			type: 4,
+// 		})
+// 	);
+// }
 const msgList = ref([]);
 ws.onopen = function () {
 	console.log("连接服务器成功");
+	getOnline();
 };
+const getOnline = async () => {
+	const res = await onlineUsers();
+	console.log(res);
+};
+// let heartbeatInterval = setInterval(sendHeartbeat, 2000);
 const msg = ref("");
+// 监听连接关闭事件
+ws.addEventListener("close", () => {
+	console.log("服务器关闭");
+	// clearInterval(heartbeatInterval);
+});
 function send() {
 	//发送消息
+	getOnline();
 	ws.send(
 		JSON.stringify({
-			content: msg.value,
-			userId: 1,
 			nickname: store.user.nickname,
+			content: msg.value,
+			userId: userId,
 			sendTime: "2023-6-13 16:47",
 			chatRoomId: 1,
 		})
 	);
+	console.log({
+		nickname: store.user.nickname,
+		content: msg.value,
+		userId: userId,
+		sendTime: "2023-6-13 16:47",
+		chatRoomId: 1,
+	});
 	msgList.value.push({
 		content: msg.value,
-		userId: 1,
+		userId: userId,
 		nickname: store.user.nickname,
 		sendTime: "2023-6-13 16:47",
 		chatRoomId: 1,
-		myselfy: true,
 	});
 	msg.value = "";
 }
@@ -63,7 +90,9 @@ function scrollToBottom(type) {
 }
 const sendMsg = () => {
 	send();
-	scrollToBottom(1);
+	nextTick(() => {
+		scrollToBottom(1);
+	});
 };
 
 onMounted(() => {
