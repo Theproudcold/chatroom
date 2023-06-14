@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import UserMask from "@/components/UserMask.vue";
 import { mainStore } from "@/store/index";
 import { userInfo } from "@/api/user";
+
 const store = mainStore();
 const user = ref({});
 const getUserInfo = async () => {
