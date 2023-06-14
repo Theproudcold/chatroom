@@ -5,38 +5,23 @@ import RoomItem from "@/components/RoomItem.vue";
 import { onMounted, ref } from "vue";
 import { Rooms } from "@/api/rooms";
 import { mainStore } from "@/store/index";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const store = mainStore();
-const rooms = [
-	{
-		id: 1,
-		roomAvatar:
-			"https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-		roomUserId: 1,
-		roomName: "聊天室1",
-		select: true,
-	},
-	{
-		id: 2,
-		roomAvatar:
-			"https://article.biliimg.com/bfs/article/a235b562cea354a9797f35eebc2eaf6281e14503.jpg",
-		roomUserId: 1,
-		roomName: "聊天室1",
-		select: false,
-	},
-];
+const rooms = ref([]);
 
 // 获取聊天室列表
 const getRooms = async () => {
-	const res = await Rooms();
-	console.log(res);
+	const { data } = await Rooms();
+	rooms.value = data;
 };
 // 前往对应聊天室
 const toRooms = (item) => {
 	selectRooms.value = item.id;
+	router.push(`/chat/chatroom/${item.id}`);
 };
-const selectRooms = ref(0);
-selectRooms.value = rooms[0].id;
+const selectRooms = ref(1);
 onMounted(() => getRooms());
 </script>
 

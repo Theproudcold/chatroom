@@ -26,46 +26,46 @@ const ws = useWebSocket(handelMessage, userId);
 
 ws.onmessage = function (event) {
 	const obj = JSON.parse(event.data);
-	console.log(event);
-	store.online = obj.onlineCount;
 	if (obj.type && obj.type == 1) {
 		msgList.value.push(obj.data);
-	} else {
-		console.log(obj);
-		store.onlineUser.push(obj.data);
+	} else if (obj.type == 2 || obj.type == 3) {
+		getOnline();
+	} else if (obj.type == 4) {
+		return;
 	}
+	console.log(obj);
 };
 function handelMessage(e) {
 	const data = JSON.parse(e.data);
 	console.log(data);
 }
-// // 发送心跳包
-// function sendHeartbeat() {
-// 	ws.send(
-// 		JSON.stringify({
-// 			type: 4,
-// 		})
-// 	);
-// }
+// 发送心跳包
+function sendHeartbeat() {
+	ws.send(
+		JSON.stringify({
+			type: 4,
+		})
+	);
+}
 const msgList = ref([]);
 ws.onopen = function () {
 	console.log("连接服务器成功");
-	// getOnline();
+	getOnline();
 };
-// const getOnline = async () => {
-// 	const res = await onlineUsers();
-// 	console.log(res);
-// };
-// let heartbeatInterval = setInterval(sendHeartbeat, 2000);
+const getOnline = async () => {
+	const { data } = await onlineUsers();
+	store.online = data.onlineNumber;
+	store.onlineUser = data.onlineUsers;
+};
+let heartbeatInterval = setInterval(sendHeartbeat, 2000);
 const msg = ref("");
 // 监听连接关闭事件
 ws.addEventListener("close", () => {
 	console.log("服务器关闭");
-	// clearInterval(heartbeatInterval);
+	clearInterval(heartbeatInterval);
 });
 function send() {
 	//发送消息
-	// getOnline();
 	ws.send(
 		JSON.stringify({
 			nickname: store.user.nickname,
