@@ -4,8 +4,10 @@ import MemberItem from "@/components/memberItem.vue";
 import RoomItem from "@/components/RoomItem.vue";
 import { mainStore } from "@/store/index";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 const router = useRouter();
 const store = mainStore();
+console.log(store.onlineUser);
 </script>
 
 <template>
@@ -26,7 +28,7 @@ const store = mainStore();
 				<div class="member-list">
 					<MemberItem
 						v-for="item in store.onlineUser"
-						:key="item"
+						:key="item.id"
 						:user="item" />
 				</div>
 			</div>

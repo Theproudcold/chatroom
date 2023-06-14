@@ -5,6 +5,7 @@ import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
+import { getUserInfo } from "@/utils/data";
 const store = mainStore();
 const router = useRouter();
 
@@ -12,6 +13,7 @@ onBeforeRouteUpdate((to, from, next) => {
 	if (to.params.id !== from.params.id) {
 		getUserInfo();
 		roomsId.value = router.currentRoute.value.params.id;
+		getOnline();
 	}
 	next();
 });
@@ -32,6 +34,9 @@ ws.onmessage = function (event) {
 	const obj = JSON.parse(event.data);
 	if (obj.type && obj.type == 1) {
 		msgList.value.push(obj.data);
+		nextTick(() => {
+			scrollToBottom(1);
+		});
 	} else if (obj.type == 2 || obj.type == 3) {
 		getOnline();
 	} else if (obj.type == 4) {
@@ -60,6 +65,7 @@ const getOnline = async () => {
 	const { data } = await onlineUsers();
 	store.online = data.onlineNumber;
 	store.onlineUser = data.onlineUsers;
+	console.log(store.onlineUser);
 };
 let heartbeatInterval = setInterval(sendHeartbeat, 2000);
 const msg = ref("");
@@ -136,6 +142,7 @@ onBeforeUnmount(() => {
 				v-model="msg"
 				class="inputs"
 				placeholder="聊天时请注意文明用语"
+				@keyup.enter="sendMsg"
 				type="text" />
 			<div class="button" @click="sendMsg">
 				<i class="iconfont icon-icon"></i>
