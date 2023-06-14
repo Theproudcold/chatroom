@@ -12,7 +12,7 @@ const store = mainStore();
 	<div class="main myCenter">
 		<div class="window">
 			<div class="left">
-				<Menu> </Menu>
+				<Menu></Menu>
 			</div>
 			<div class="content">
 				<router-view></router-view>

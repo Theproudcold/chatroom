@@ -27,6 +27,7 @@ const toRooms = (item) => {
 	router.push(`/chat/chatroom/${item}`);
 };
 const selectRooms = ref(1);
+selectRooms.value = router.currentRoute.value.params.id;
 onMounted(() => getRooms());
 
 // 更新房间信息
@@ -75,7 +76,7 @@ onMounted(() => getUserInfo());
 		<div class="bottom">
 			<p><i class="iconfont icon-tuichu"></i>退出聊天室</p>
 		</div>
-		<RoomMask @upadta="upadta"></RoomMask>
+		<RoomMask @upadta="upadataRoom"></RoomMask>
 		<UserMask @upadta="upadtaUser" :user="user"></UserMask>
 	</div>
 </template>

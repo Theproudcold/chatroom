@@ -4,27 +4,30 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
-import { userInfo } from "@/api/user";
-import { useRouter } from "vue-router";
+
+import { onBeforeRouteUpdate, useRouter } from "vue-router";
 
 const router = useRouter();
+
+onBeforeRouteUpdate((to, from, next) => {
+	if (to.params.id !== from.params.id) {
+		getUserInfo();
+		roomsId.value = router.currentRoute.value.params.id;
+	}
+	next();
+});
+const roomsId = ref(router.currentRoute.value.params.id);
 const user = ref({});
-
-console.log(router);
-const getUserInfo = async () => {
-	const res = await userInfo();
-	store.user = res.data;
-	console.log(store.user);
-	user.value = store.user;
-};
-onMounted(() => getUserInfo());
-
+user.value = store.user;
+console.log(roomsId.value);
+onMounted(() => {
+	getUserInfo();
+});
 const content1 = ref(null);
 const store = mainStore();
 // 创建 WebSocket 客户端实例
 // WebSocket HTML5提供的内置对象
 const userId = store.user.id;
-console.log(userId);
 const ws = useWebSocket(handelMessage, userId);
 
 ws.onmessage = function (event) {
@@ -75,7 +78,7 @@ function send() {
 			content: msg.value,
 			userId: userId,
 			sendTime: "2023-6-13 16:47",
-			chatRoomId: 1,
+			chatRoomId: roomsId.value,
 		})
 	);
 	console.log({
@@ -83,14 +86,14 @@ function send() {
 		content: msg.value,
 		userId: userId,
 		sendTime: "2023-6-13 16:47",
-		chatRoomId: 1,
+		chatRoomId: roomsId.value,
 	});
 	msgList.value.push({
 		content: msg.value,
 		userId: userId,
 		nickname: store.user.nickname,
 		sendTime: "2023-6-13 16:47",
-		chatRoomId: 1,
+		chatRoomId: roomsId.value,
 	});
 	msg.value = "";
 }
@@ -158,10 +161,10 @@ onBeforeUnmount(() => {
 		&::-webkit-scrollbar {
 			width: 0.5rem; /* 滚动条宽度 */
 			border-radius: 0.3125rem; /* 滚动条圆角 */
-			background-color: $thirdColor; /* 滚动条背景色 */
+			background-color: #fff; /* 滚动条背景色 */
 		}
 		&::-webkit-scrollbar-thumb {
-			background-color: $secondaryColor; /* 滚动条滑块颜色 */
+			background-color: #fff; /* 滚动条滑块颜色 */
 			border-radius: 0.3125rem; /* 滑块边框圆角 */
 		}
 	}
