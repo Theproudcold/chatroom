@@ -35,6 +35,11 @@ const router = createRouter({
 	routes,
 });
 router.beforeEach((to, from, next) => {
+	const token = localStorage.getItem("token"); // 获取Token
+	if (token && to.path === "/login") {
+		// 如果已经登录且要访问的页面是登录页或不需要登录的页面，则直接跳转到聊天页
+		next("/chat");
+	}
 	if (to.path === "/login" || localStorage.token || to.path === "/register") {
 		next();
 	} else {
