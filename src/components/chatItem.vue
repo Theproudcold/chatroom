@@ -11,6 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
+	<div class="times">{{ item.sendTime }}</div>
 	<div class="chat-item" :class="{ myselfe: id == item.userId }">
 		<div class="left">
 			<img src="" alt="" />
@@ -42,6 +43,11 @@ const props = defineProps({
 			border-top-right-radius: 0;
 		}
 	}
+}
+.times {
+	width: 100%;
+	text-align: center;
+	font-size: 0.875rem;
 }
 .chat-item {
 	margin-top: 1.5rem;

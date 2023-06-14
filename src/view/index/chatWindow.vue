@@ -5,10 +5,23 @@ import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
-import { getUserInfo } from "@/utils/data";
+import { getFormatDataTime } from "@/utils/data";
 const store = mainStore();
 const router = useRouter();
 
+const getUserInfo = async () => {
+	const res = await userInfo();
+	if (res.code == 402) {
+		ElMessage({
+			showClose: true,
+			message: "认证失败，请重新登录",
+			type: "error",
+		});
+		router.push("/login");
+	}
+	store.user = res.data;
+};
+onMounted(() => getUserInfo());
 onBeforeRouteUpdate((to, from, next) => {
 	if (to.params.id !== from.params.id) {
 		getUserInfo();
@@ -21,9 +34,6 @@ const roomsId = ref(router.currentRoute.value.params.id);
 const user = ref({});
 user.value = store.user;
 console.log(roomsId.value);
-onMounted(() => {
-	getUserInfo();
-});
 const content1 = ref(null);
 // 创建 WebSocket 客户端实例
 // WebSocket HTML5提供的内置对象
@@ -81,7 +91,7 @@ function send() {
 			nickname: store.user.nickname,
 			content: msg.value,
 			userId: userId,
-			sendTime: "2023-6-13 16:47",
+			sendTime: getFormatDataTime(),
 			chatRoomId: roomsId.value,
 		})
 	);
@@ -89,14 +99,14 @@ function send() {
 		nickname: store.user.nickname,
 		content: msg.value,
 		userId: userId,
-		sendTime: "2023-6-13 16:47",
+		sendTime: getFormatDataTime(),
 		chatRoomId: roomsId.value,
 	});
 	msgList.value.push({
 		content: msg.value,
 		userId: userId,
 		nickname: store.user.nickname,
-		sendTime: "2023-6-13 16:47",
+		sendTime: getFormatDataTime(),
 		chatRoomId: roomsId.value,
 	});
 	msg.value = "";
