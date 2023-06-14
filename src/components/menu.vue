@@ -1,18 +1,40 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import UserMask from "@/components/UserMask.vue";
+import RoomrMask from "@/components/RoomMask.vue";
 import { mainStore } from "@/store/index";
 import { userInfo } from "@/api/user";
+import { Rooms } from "@/api/rooms";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const store = mainStore();
 const user = ref({});
+const rooms = ref([]);
 const getUserInfo = async () => {
 	const res = await userInfo();
 	store.user = res.data;
 	user.value = store.user;
 };
+// 获取聊天室列表
+const getRooms = async () => {
+	const { data } = await Rooms();
+	rooms.value = data;
+};
+// 前往对应聊天室
+const toRooms = (item) => {
+	selectRooms.value = item;
+	router.push(`/chat/chatroom/${item}`);
+};
+const selectRooms = ref(1);
+onMounted(() => getRooms());
+
+// 更新房间信息
+const upadataRoom = () => {
+	getRooms();
+};
 // 更新用户信息
-const upadta = () => {
+const upadtaUser = () => {
 	getUserInfo();
 };
 onMounted(() => getUserInfo());
@@ -30,7 +52,7 @@ onMounted(() => getUserInfo());
 						<h3 class="nickname">{{ user.nickname }}</h3>
 						<div
 							class="edit myCenter"
-							@click="store.showMask = true">
+							@click="store.showUserMask = true">
 							<span>修改</span>
 						</div>
 					</div>
@@ -38,16 +60,23 @@ onMounted(() => getUserInfo());
 				</div>
 			</div>
 			<div class="button">
-				<p>+ 新建聊天室</p>
+				<p @click="store.showRoomMask = true">+ 新建聊天室</p>
 			</div>
 		</div>
 		<div class="content">
-			<slot></slot>
+			<RoomItem
+				v-for="item in rooms"
+				:rooms="item"
+				time="22:24"
+				:active="selectRooms == item.id"
+				@click="toRooms(item.id)"
+				:key="item.id"></RoomItem>
 		</div>
 		<div class="bottom">
 			<p><i class="iconfont icon-tuichu"></i>退出聊天室</p>
 		</div>
-		<UserMask @upadta="upadta" :user="user"></UserMask>
+		<RoomMask @upadta="upadta"></RoomMask>
+		<UserMask @upadta="upadtaUser" :user="user"></UserMask>
 	</div>
 </template>
 
@@ -67,6 +96,7 @@ onMounted(() => getUserInfo());
 				height: 4.875rem;
 				border-radius: 50%;
 				overflow: hidden;
+				background: $userBgColor;
 				img {
 					width: 100%;
 					height: 100%;

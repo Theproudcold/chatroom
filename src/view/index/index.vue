@@ -2,42 +2,17 @@
 import Menu from "@/components/menu.vue";
 import MemberItem from "@/components/memberItem.vue";
 import RoomItem from "@/components/RoomItem.vue";
-import { onMounted, ref } from "vue";
-import { Rooms } from "@/api/rooms";
 import { mainStore } from "@/store/index";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
 const store = mainStore();
-const rooms = ref([]);
-
-// 获取聊天室列表
-const getRooms = async () => {
-	const { data } = await Rooms();
-	rooms.value = data;
-};
-// 前往对应聊天室
-const toRooms = (item) => {
-	selectRooms.value = item.id;
-	router.push(`/chat/chatroom/${item.id}`);
-};
-const selectRooms = ref(1);
-onMounted(() => getRooms());
 </script>
 
 <template>
 	<div class="main myCenter">
 		<div class="window">
 			<div class="left">
-				<Menu>
-					<RoomItem
-						v-for="item in rooms"
-						:rooms="item"
-						time="22:24"
-						:active="selectRooms == item.id"
-						@click="toRooms(item)"
-						:key="item.id"></RoomItem>
-				</Menu>
+				<Menu> </Menu>
 			</div>
 			<div class="content">
 				<router-view></router-view>

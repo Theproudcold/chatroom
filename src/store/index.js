@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 export const mainStore = defineStore("main", {
 	state: () => ({
 		user: {},
-		showMask: false,
+		showUserMask: false,
+		showRoomMask: false,
 		online: 0,
 		onlineUser: [],
 	}),

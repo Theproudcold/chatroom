@@ -4,10 +4,13 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
-
 import { userInfo } from "@/api/user";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const user = ref({});
+
+console.log(router);
 const getUserInfo = async () => {
 	const res = await userInfo();
 	store.user = res.data;

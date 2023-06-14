@@ -6,3 +6,11 @@ export function Rooms() {
 		url: "/chatRoom/rooms",
 	});
 }
+// 获取所有聊天室
+export function newRooms(room) {
+	return request({
+		url: "/chatRoom/newRoom",
+		method: "post",
+		data: room,
+	});
+}

@@ -1,29 +1,34 @@
 <script setup>
 import { mainStore } from "@/store/index";
-import { updataUserInfo } from "@/api/user";
 import { ref } from "vue";
+import { newRooms } from "@/api/rooms";
 const store = mainStore();
 // 退出
 const closure = () => {
-	store.showUserMask = false;
+	store.showRoomMask = false;
 };
+const room = ref({
+	roomAvatar: "",
+	roomUserId: store.user.id,
+	roomName: "",
+});
 const emit = defineEmits(["upadta"]);
-const userInfo = ref({});
-userInfo.value = store.user;
 // 保存
 const keep = async () => {
-	const res = await updataUserInfo(userInfo.value);
+	const res = await newRooms(room.value);
+	console.log(room.value);
+	console.log(res);
 	if (res.code == 200) {
 		ElMessage({
 			showClose: true,
-			message: "修改成功",
+			message: "创建成功",
 			type: "success",
 		});
 		emit("upadta");
 	} else {
 		ElMessage({
 			showClose: true,
-			message: "修改失败",
+			message: "创建失败",
 			type: "error",
 		});
 	}
@@ -31,29 +36,25 @@ const keep = async () => {
 };
 </script>
 <template>
-	<div class="overlay" v-if="store.showUserMask">
+	<div class="overlay" v-if="store.showRoomMask">
 		<div class="modal">
 			<div class="modal-head">
-				<h2>个人资料</h2>
+				<h2>新建聊天室</h2>
 				<i class="iconfont icon-guanbi" @click="closure"></i>
 			</div>
 			<div class="modal-content">
-				<div class="user-avatar">
+				<div class="room-avatar">
 					<div class="avatar">
 						<img src="" alt="" />
 					</div>
 					<p class="upload">点击上传头像</p>
 				</div>
-				<div class="user-name">
-					<p class="title">用户名</p>
-					<input v-model="userInfo.nickname" type="text" />
-				</div>
-				<div class="user-info">
-					<p class="title">个人简介</p>
-					<textarea v-model="userInfo.description"></textarea>
+				<div class="room-name">
+					<p class="title">聊天室名称</p>
+					<input v-model="room.roomName" type="text" />
 				</div>
 			</div>
-			<div class="button myCenter" @click="keep"><p>保存</p></div>
+			<div class="button myCenter" @click="keep"><p>确定</p></div>
 		</div>
 	</div>
 </template>
@@ -88,7 +89,7 @@ const keep = async () => {
 			}
 		}
 		.modal-content {
-			.user-avatar {
+			.room-avatar {
 				display: flex;
 				align-items: center;
 				margin: 1.3125rem 0 1.6875rem 0;
@@ -121,7 +122,7 @@ const keep = async () => {
 				color: $fontColor;
 				margin-bottom: 0.4375rem;
 			}
-			.user-name {
+			.room-name {
 				input {
 					width: 9.25rem;
 					height: 2.3125rem;
@@ -129,17 +130,6 @@ const keep = async () => {
 					padding: 0.625rem;
 					border: 0.0625rem solid $navFont;
 					border-radius: 0.5625rem;
-				}
-			}
-			.user-info {
-				textarea {
-					width: 16.4375rem;
-					height: 5.875rem;
-					outline: none;
-					padding: 0.625rem;
-					border: 0.0625rem solid $navFont;
-					border-radius: 0.5625rem;
-					resize: none;
 				}
 			}
 		}

@@ -23,7 +23,7 @@ const props = defineProps({
 	.avatar {
 		width: 1.625rem;
 		height: 1.625rem;
-		background-color: red;
+		background: $userBgColor;
 		border-radius: 50%;
 	}
 	.name {
