@@ -107,6 +107,16 @@ function send() {
 	});
 	msg.value = "";
 }
+// 监听滚动事件
+const scroll = () => {
+	if (content1.value.scrollTop === 0) {
+		// 已经滚动到了最顶部
+		// 处理逻辑
+		if (!noMsg.value) {
+			getMsgList(pageSize.value++, roomsId.value);
+		}
+	}
+};
 function scrollToBottom(type) {
 	// 滚动到 div 元素的底部
 	content1.value.scrollTop = content1.value.scrollHeight;
@@ -123,9 +133,13 @@ const sendMsg = () => {
 	});
 };
 const pageSize = ref(1);
+const noMsg = ref(false);
 const getMsgList = async (pageSize, roomsId) => {
 	const { data } = await messageList(pageSize, roomsId);
-	msgList.value = data.message;
+	pageSize == 1
+		? (msgList.value = data.message)
+		: msgList.value.unshift(...data.message);
+	noMsg.value = data.listLast;
 };
 onMounted(async () => {
 	await getMsgList(1, roomsId.value);
@@ -141,7 +155,7 @@ onBeforeUnmount(() => {
 
 <template>
 	<div class="chat-window">
-		<div class="content" ref="content1">
+		<div class="content" ref="content1" @scroll="scroll">
 			<ChatItem
 				v-for="item in msgList"
 				:item="item"
