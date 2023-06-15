@@ -2,7 +2,7 @@
 import ChatItem from "@/components/chatItem.vue";
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
-import { onlineUsers } from "@/api/user";
+import { onlineUsers, userInfo } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
 import { getFormatDataTime } from "@/utils/data";
@@ -31,14 +31,13 @@ onBeforeRouteUpdate((to, from, next) => {
 	next();
 });
 const roomsId = ref(router.currentRoute.value.params.id);
-const user = ref({});
-user.value = store.user;
 console.log(roomsId.value);
 const content1 = ref(null);
 // 创建 WebSocket 客户端实例
 // WebSocket HTML5提供的内置对象
-const userId = store.user.id;
-const ws = useWebSocket(handelMessage, userId);
+const { user } = JSON.parse(localStorage.getItem("userInfo"));
+console.log(user);
+const ws = useWebSocket(handelMessage, user.id);
 
 ws.onmessage = function (event) {
 	const obj = JSON.parse(event.data);
@@ -90,7 +89,7 @@ function send() {
 		JSON.stringify({
 			nickname: store.user.nickname,
 			content: msg.value,
-			userId: userId,
+			userId: user.id,
 			sendTime: getFormatDataTime(),
 			chatRoomId: roomsId.value,
 		})
@@ -98,13 +97,13 @@ function send() {
 	console.log({
 		nickname: store.user.nickname,
 		content: msg.value,
-		userId: userId,
+		userId: user.id,
 		sendTime: getFormatDataTime(),
 		chatRoomId: roomsId.value,
 	});
 	msgList.value.push({
 		content: msg.value,
-		userId: userId,
+		userId: user.id,
 		nickname: store.user.nickname,
 		sendTime: getFormatDataTime(),
 		chatRoomId: roomsId.value,

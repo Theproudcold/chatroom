@@ -20,6 +20,11 @@ export const mainStore = defineStore("main", {
 				storage: sessionStorage,
 				paths: ["user"], // 修改为正确的属性名
 			},
+			{
+				key: "userInfo",
+				storage: localStorage,
+				paths: ["user"], // 修改为正确的属性名
+			},
 		],
 	},
 });
