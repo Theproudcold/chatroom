@@ -9,34 +9,25 @@ import { getFormatDataTime } from "@/utils/data";
 const store = mainStore();
 const router = useRouter();
 
-const getUserInfo = async () => {
-	const res = await userInfo();
-	if (res.code == 402) {
-		ElMessage({
-			showClose: true,
-			message: "认证失败，请重新登录",
-			type: "error",
-		});
+// 判断登录状态
+const iflogin = () => {
+	if (!localStorage.token) {
 		router.push("/login");
 	}
-	store.user = res.data;
 };
-onMounted(() => getUserInfo());
+
+onMounted(() => iflogin());
 onBeforeRouteUpdate((to, from, next) => {
 	if (to.params.id !== from.params.id) {
-		getUserInfo();
 		roomsId.value = router.currentRoute.value.params.id;
-		getOnline();
 	}
 	next();
 });
 const roomsId = ref(router.currentRoute.value.params.id);
-console.log(roomsId.value);
 const content1 = ref(null);
 // 创建 WebSocket 客户端实例
 // WebSocket HTML5提供的内置对象
 const { user } = JSON.parse(localStorage.getItem("userInfo"));
-console.log(user);
 const ws = useWebSocket(handelMessage, user.id);
 
 ws.onmessage = function (event) {
@@ -72,11 +63,13 @@ ws.onopen = function () {
 };
 const getOnline = async () => {
 	const { data } = await onlineUsers();
+	console.log(data);
 	store.online = data.onlineNumber;
 	store.onlineUser = data.onlineUsers;
 	console.log(store.onlineUser);
 };
-let heartbeatInterval = setInterval(sendHeartbeat, 2000);
+// 更改为10秒
+let heartbeatInterval = setInterval(sendHeartbeat, 10000);
 const msg = ref("");
 // 监听连接关闭事件
 ws.addEventListener("close", () => {
@@ -143,7 +136,6 @@ onBeforeUnmount(() => {
 			<ChatItem
 				v-for="item in msgList"
 				:item="item"
-				:myselfy="store.user.id"
 				:key="item"></ChatItem>
 		</div>
 		<div class="bottom">
