@@ -1,8 +1,6 @@
 import { userInfo } from "@/api/user";
 import { mainStore } from "@/store/index";
-import { useRouter } from "vue-router";
 const store = mainStore();
-const router = useRouter();
 // 获取用户信息
 export const getUserInfo = async () => {
 	const res = await userInfo();

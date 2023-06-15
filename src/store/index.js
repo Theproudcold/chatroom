@@ -6,6 +6,7 @@ export const mainStore = defineStore("main", {
 		showRoomMask: false,
 		online: 0,
 		onlineUser: [],
+		fastMsg: {},
 	}),
 	getters: {},
 	actions: {
@@ -15,11 +16,6 @@ export const mainStore = defineStore("main", {
 	persist: {
 		enabled: true,
 		strategies: [
-			{
-				key: "store",
-				storage: sessionStorage,
-				paths: ["user"], // 修改为正确的属性名
-			},
 			{
 				key: "userInfo",
 				storage: localStorage,

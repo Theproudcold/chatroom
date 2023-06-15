@@ -1,19 +1,22 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { login, userInfo } from "@/api/user";
-import { mainStore } from "@/store/index";
+import { login } from "@/api/user";
 import { getUserInfo } from "@/utils/data";
 const router = useRouter();
 const msg = ref(""); //信息提示
 // 进行登录操作
-const store = mainStore();
+const user = ref({
+	userName: "",
+	password: "",
+});
 const goLogin = async () => {
 	if (user.value.userName == "" || user.value.password == "") {
 		msg.value = "不能输入空";
 		return;
 	}
 	const res = await login(user.value);
+	console.log(res);
 	if (res.code == 400 || res.code == 402) {
 		msg.value = res.msg;
 	}
@@ -36,10 +39,6 @@ const goLogin = async () => {
 const goRegister = () => {
 	router.push("/register");
 };
-const user = ref({
-	userName: "",
-	password: "",
-});
 </script>
 
 <template>
