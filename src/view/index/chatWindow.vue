@@ -63,6 +63,7 @@ const msgList = ref([]);
 ws.onopen = function () {
 	console.log("连接服务器成功");
 	sendHeartbeat();
+	// BUG:获取不到在线用户
 	getOnline();
 };
 const getOnline = async () => {
@@ -82,6 +83,14 @@ ws.addEventListener("close", () => {
 });
 function send() {
 	//发送消息
+	if (msg.value == "") {
+		ElMessage({
+			showClose: true,
+			message: "不能发送空内容",
+			type: "error",
+		});
+		return;
+	}
 	ws.send(
 		JSON.stringify({
 			nickname: store.user.nickname,
@@ -112,6 +121,7 @@ const scroll = () => {
 	if (content1.value.scrollTop === 0) {
 		// 已经滚动到了最顶部
 		// 处理逻辑
+		// TODO:优化逻辑
 		if (!noMsg.value) {
 			getMsgList(pageSize.value++, roomsId.value);
 		}
@@ -134,6 +144,7 @@ const sendMsg = () => {
 };
 const pageSize = ref(1);
 const noMsg = ref(false);
+// TODO:获取每个房间的最新消息
 const getMsgList = async (pageSize, roomsId) => {
 	const { data } = await messageList(pageSize, roomsId);
 	pageSize == 1
