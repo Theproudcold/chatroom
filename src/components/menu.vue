@@ -39,6 +39,9 @@ const upadataRoom = () => {
 const upadtaUser = () => {
 	getUserInfo();
 };
+const quit = () => {
+	(localStorage.token = ""), (store.user = {}), router.push("/login");
+};
 </script>
 
 <template>
@@ -73,7 +76,7 @@ const upadtaUser = () => {
 				@click="toRooms(item.id)"
 				:key="item.id"></RoomItem>
 		</div>
-		<div class="bottom">
+		<div class="bottom" @click="quit">
 			<p><i class="iconfont icon-tuichu"></i>退出聊天室</p>
 		</div>
 		<RoomMask @upadta="upadataRoom"></RoomMask>
@@ -86,30 +89,36 @@ const upadtaUser = () => {
 	width: 100%;
 	height: 100%;
 	padding: 1.25rem;
+
 	.header {
 		.user {
 			cursor: pointer;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+
 			.user-img {
 				width: 4.875rem;
 				height: 4.875rem;
 				border-radius: 50%;
 				overflow: hidden;
 				background: $userBgColor;
+
 				img {
 					width: 100%;
 					height: 100%;
 				}
 			}
+
 			.user-info {
 				margin-top: 1rem;
 				margin-left: 1.125rem;
+
 				.info-header {
 					display: flex;
 					justify-content: center;
 					align-items: center;
+
 					.nickname {
 						width: 7.1875rem;
 						height: 1.9375rem;
@@ -121,6 +130,7 @@ const upadtaUser = () => {
 						line-height: 1.9375rem;
 						color: $fontColor;
 					}
+
 					.edit {
 						width: 2.6875rem;
 						height: 1.1875rem;
@@ -131,6 +141,7 @@ const upadtaUser = () => {
 						background-color: $secondaryColor;
 					}
 				}
+
 				.description {
 					margin-top: 0.8125rem;
 					width: 8.1875rem;
@@ -139,13 +150,18 @@ const upadtaUser = () => {
 					line-height: 0.8125rem;
 					letter-spacing: 0.1em;
 					color: #a8a8a8;
-					display: -webkit-box; /* 设置为块级元素 */
-					-webkit-line-clamp: 2; /* 显示行数 */
-					-webkit-box-orient: vertical; /* 垂直排列 */
-					overflow: hidden; /* 隐藏超出范围的内容 */
+					display: -webkit-box;
+					/* 设置为块级元素 */
+					-webkit-line-clamp: 2;
+					/* 显示行数 */
+					-webkit-box-orient: vertical;
+					/* 垂直排列 */
+					overflow: hidden;
+					/* 隐藏超出范围的内容 */
 				}
 			}
 		}
+
 		.button {
 			width: 13.8125rem;
 			height: 2.875rem;
@@ -163,12 +179,15 @@ const upadtaUser = () => {
 			background-color: $secondaryColor;
 		}
 	}
+
 	.content {
 		height: 16.75rem;
 		margin: 1.625rem 0;
 	}
+
 	.bottom {
 		text-align: center;
+
 		p {
 			height: 0.875rem;
 			font-size: 0.625rem;
@@ -178,6 +197,7 @@ const upadtaUser = () => {
 			color: $secondaryColor;
 		}
 	}
+
 	.mask {
 		width: 100vw;
 		height: 100vh;
