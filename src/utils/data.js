@@ -46,6 +46,7 @@ export function getFormatDataTimeSecond() {
 	second = second < 10 ? "0" + second : second;
 	return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
+// 时间戳转换
 export function getMyDate(str, bool) {
 	if (str > 9999999999) {
 		// 这里判断：时间戳为几位数

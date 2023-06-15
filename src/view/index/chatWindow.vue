@@ -2,10 +2,10 @@
 import ChatItem from "@/components/chatItem.vue";
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
-import { onlineUsers, userInfo } from "@/api/user";
+import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
-import { getFormatDataTime } from "@/utils/data";
+import { getFormatDataTime, getMyDate } from "@/utils/data";
 const store = mainStore();
 const router = useRouter();
 
@@ -33,10 +33,10 @@ const ws = useWebSocket(handelMessage, user.id);
 ws.onmessage = function (event) {
 	const obj = JSON.parse(event.data);
 	if (obj.type && obj.type == 1) {
-		msgList.value.push(obj.data);
-		nextTick(() => {
-			scrollToBottom(1);
-		});
+		const data = obj.data;
+		// 时间戳处理
+		data.sendTime = getMyDate(data.sendTime);
+		msgList.value.push(data);
 	} else if (obj.type == 2 || obj.type == 3) {
 		getOnline();
 	} else if (obj.type == 4) {
