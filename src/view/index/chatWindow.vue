@@ -1,28 +1,31 @@
 <script setup>
 import ChatItem from "@/components/chatItem.vue";
-import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref, computed } from "vue";
 import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
+import { messageList } from "@/api/message";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
 import { getFormatDataTime, getMyDate } from "@/utils/data";
 const store = mainStore();
 const router = useRouter();
-
 // 判断登录状态
 const iflogin = () => {
 	if (!localStorage.token) {
 		router.push("/login");
 	}
 };
-
 onMounted(() => iflogin());
+// 路由更新时
 onBeforeRouteUpdate((to, from, next) => {
 	if (to.params.id !== from.params.id) {
 		roomsId.value = router.currentRoute.value.params.id;
+		getMsgList(1, roomsId.value);
 	}
 	next();
 });
+
+// 获取房间id
 const roomsId = ref(router.currentRoute.value.params.id);
 const content1 = ref(null);
 // 创建 WebSocket 客户端实例
@@ -59,6 +62,7 @@ function sendHeartbeat() {
 const msgList = ref([]);
 ws.onopen = function () {
 	console.log("连接服务器成功");
+	sendHeartbeat();
 	getOnline();
 };
 const getOnline = async () => {
@@ -118,8 +122,13 @@ const sendMsg = () => {
 		scrollToBottom(1);
 	});
 };
-
-onMounted(() => {
+const pageSize = ref(1);
+const getMsgList = async (pageSize, roomsId) => {
+	const { data } = await messageList(pageSize, roomsId);
+	msgList.value = data.message;
+};
+onMounted(async () => {
+	await getMsgList(1, roomsId.value);
 	scrollToBottom();
 });
 onBeforeUnmount(() => {
