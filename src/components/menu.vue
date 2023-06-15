@@ -11,6 +11,7 @@ const router = useRouter();
 const store = mainStore();
 const user = ref({});
 const rooms = ref([]);
+user.value = store.user;
 const getUserInfo = async () => {
 	const res = await userInfo();
 	store.user = res.data;
@@ -38,7 +39,6 @@ const upadataRoom = () => {
 const upadtaUser = () => {
 	getUserInfo();
 };
-onMounted(() => getUserInfo());
 </script>
 
 <template>
