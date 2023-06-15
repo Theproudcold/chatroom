@@ -56,7 +56,7 @@ const props = defineProps({
 		width: 2.6875rem;
 		height: 2.6875rem;
 		border-radius: 50%;
-		background-color: #333;
+		background: $userBgColor;
 	}
 	.right {
 		margin-left: 0.625rem;
