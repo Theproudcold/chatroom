@@ -100,13 +100,6 @@ function send() {
 			chatRoomId: roomsId.value,
 		})
 	);
-	console.log({
-		nickname: store.user.nickname,
-		content: msg.value,
-		userId: user.id,
-		sendTime: getFormatDataTime(),
-		chatRoomId: roomsId.value,
-	});
 	msgList.value.push({
 		content: msg.value,
 		userId: user.id,

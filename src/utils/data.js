@@ -56,11 +56,3 @@ export function getMyDate(str) {
 		date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
 	return `${month}-${day} ${hour}:${minute}`;
 }
-//补0操作  小于10的就在数字前面加0，这应该很好理解吧
-
-function getzf(c_num) {
-	if (parseInt(c_num) < 10) {
-		c_num = "0" + c_num;
-	}
-	return c_num;
-}

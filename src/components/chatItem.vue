@@ -1,6 +1,6 @@
 <script setup>
 import { mainStore } from "@/store/index";
-import { onMounted } from "vue";
+import { getMyDate } from "@/utils/data";
 const store = mainStore();
 const id = store.user.id;
 const props = defineProps({
@@ -11,7 +11,9 @@ const props = defineProps({
 </script>
 
 <template>
-	<div class="times">{{ item.sendTime }}</div>
+	<div class="times">
+		{{ getMyDate(item.sendTime) }}
+	</div>
 	<div class="chat-item" :class="{ myselfe: id == item.userId }">
 		<div class="left">
 			<img src="" alt="" />
