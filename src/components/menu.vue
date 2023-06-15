@@ -60,8 +60,8 @@ const upadtaUser = () => {
 					<p class="description">{{ user.description }}</p>
 				</div>
 			</div>
-			<div class="button">
-				<p @click="store.showRoomMask = true">+ 新建聊天室</p>
+			<div class="button" @click="store.showRoomMask = true">
+				<p>+ 新建聊天室</p>
 			</div>
 		</div>
 		<div class="content">
