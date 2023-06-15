@@ -119,7 +119,7 @@ const keep = async () => {
 				line-height: 0.8125rem;
 				letter-spacing: 0.2em;
 				color: $fontColor;
-				margin-bottom: 0.4375rem;
+				margin: 0.4375rem;
 			}
 			.user-name {
 				input {
