@@ -78,22 +78,17 @@ function send() {
 		});
 		return;
 	}
-	ws.send(
-		JSON.stringify({
-			nickname: store.user.nickname,
-			content: msg.value,
-			userId: user.id,
-			sendTime: getFormatDataTime(),
-			chatRoomId: roomsId.value,
-		})
-	);
-	msgList.value.push({
+	const msg = {
+		nickname: store.user.nickname,
 		content: msg.value,
 		userId: user.id,
-		nickname: store.user.nickname,
 		sendTime: getFormatDataTime(),
 		chatRoomId: roomsId.value,
-	});
+	};
+	ws.send(JSON.stringify(msg));
+	msgList.value.push(msg);
+	store.fastMsg = msg;
+	console.log(store.fastMsg, msg);
 	msg.value = "";
 }
 // 监听滚动事件
