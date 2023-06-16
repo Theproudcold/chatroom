@@ -44,6 +44,8 @@ function handelMessage(event) {
 		getOnline();
 	} else if (obj.type == 4) {
 		if (obj.status == "success") return;
+	} else {
+		(localStorage.token = ""), (store.user = {}), router.push("/login");
 	}
 	console.log(obj);
 }
