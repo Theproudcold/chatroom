@@ -66,16 +66,18 @@ ws.onopen = function () {
 	console.log("连接服务器成功");
 	sendHeartbeat();
 	// BUG:获取不到在线用户
-	getOnline();
-	store.online++;
-	store.onlineUser.push(store.user);
+	getOnline(true);
 };
-const getOnline = async () => {
+const getOnline = async (first) => {
 	const { data } = await onlineUsers();
-	console.log(data);
-	store.online = data.onlineNumber;
-	store.onlineUser = data.onlineUsers;
-	console.log(store.onlineUser);
+	if (data != null) {
+		store.online = data.onlineNumber;
+		store.onlineUser = data.onlineUsers;
+	}
+	if (data == null || (data.onlineNumber == 1 && first)) {
+		store.online++;
+		store.onlineUser.push(store.user);
+	}
 };
 // 更改为10秒
 let heartbeatInterval = setInterval(sendHeartbeat, 10000);
