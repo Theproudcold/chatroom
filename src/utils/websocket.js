@@ -1,6 +1,6 @@
 import { WS_ADDRESS } from "@/configs";
 
-export function useWebSocket(handelMessage, url) {
+export function useWebSocket(handelOpen, handelMessage, url) {
 	const ws = new WebSocket(WS_ADDRESS + `${url}`);
 	const init = () => {};
 	function bindEvent() {
@@ -9,9 +9,7 @@ export function useWebSocket(handelMessage, url) {
 		ws.addEventListener("error", handelError, false);
 		ws.addEventListener("message", handelMessage);
 	}
-	function handelOpen(e) {
-		console.log("webSocket open", e);
-	}
+	bindEvent();
 	function handelError(e) {
 		console.log("webSocket error", e);
 	}

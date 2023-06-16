@@ -32,9 +32,8 @@ const content1 = ref(null);
 // 创建 WebSocket 客户端实例
 // WebSocket HTML5提供的内置对象
 const { user } = JSON.parse(localStorage.getItem("userInfo"));
-const ws = useWebSocket(handelMessage, user.id);
-
-ws.onmessage = function (event) {
+const ws = useWebSocket(handelOpen, handelMessage, user.id);
+function handelMessage(event) {
 	const obj = JSON.parse(event.data);
 	if (obj.type && obj.type == 1) {
 		const data = obj.data;
@@ -48,10 +47,11 @@ ws.onmessage = function (event) {
 		if (obj.status == "success") return;
 	}
 	console.log(obj);
-};
-function handelMessage(e) {
-	const data = JSON.parse(e.data);
-	console.log(data);
+}
+function handelOpen() {
+	console.log("连接服务器成功");
+	sendHeartbeat();
+	getOnline(true);
 }
 // 发送心跳包
 function sendHeartbeat() {
@@ -62,11 +62,7 @@ function sendHeartbeat() {
 	);
 }
 const msgList = ref([]);
-ws.onopen = function () {
-	console.log("连接服务器成功");
-	sendHeartbeat();
-	getOnline(true);
-};
+
 const getOnline = async (first) => {
 	const { data } = await onlineUsers();
 	if (data != null) {
