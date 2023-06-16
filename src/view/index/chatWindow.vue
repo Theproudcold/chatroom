@@ -65,7 +65,6 @@ const msgList = ref([]);
 ws.onopen = function () {
 	console.log("连接服务器成功");
 	sendHeartbeat();
-	// BUG:获取不到在线用户
 	getOnline(true);
 };
 const getOnline = async (first) => {
