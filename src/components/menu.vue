@@ -178,7 +178,6 @@ const quit = () => {
 			cursor: pointer;
 			background-color: $secondaryColor;
 		}
-		margin-bottom: 5.25rem;
 	}
 
 	.content {
@@ -187,8 +186,8 @@ const quit = () => {
 	}
 
 	.bottom {
+		margin-top: 8.125rem;
 		text-align: center;
-
 		p {
 			height: 0.875rem;
 			font-size: 0.625rem;
