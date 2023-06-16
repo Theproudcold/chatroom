@@ -17,7 +17,7 @@ const goRegister = async () => {
 	if (res.code == 200) {
 		ElMessage({
 			showClose: true,
-			message: res.msg,
+			message: "注册成功",
 			type: "success",
 		});
 		goLogin();
