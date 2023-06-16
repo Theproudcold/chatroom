@@ -119,7 +119,7 @@ const sendMsg = () => {
 		scrollToBottom(1);
 	});
 };
-const pageSize = ref(1);
+const pageSize = ref(2);
 const noMsg = ref(false);
 // TODO:获取每个房间的最新消息
 const getMsgList = async (pageSize, roomsId) => {
@@ -130,11 +130,14 @@ const getMsgList = async (pageSize, roomsId) => {
 	msgList.value = msgList.value.sort((a, b) => {
 		return new Date(a.sendTime) - new Date(b.sendTime);
 	});
-	msgList.value[msgList.value.length - 1].sendTime = getTimeStringAutoShort(
-		msgList.value[msgList.value.length - 1].sendTime
-	);
+
 	// TODO：优化逻辑显示
-	if (pageSize.value == 1) {
+	if (pageSize == 1) {
+		msgList.value[msgList.value.length - 1].sendTime =
+			getTimeStringAutoShort(
+				msgList.value[msgList.value.length - 1].sendTime
+			);
+		console.log(1);
 		msgstore.fastMsg = msgList.value[msgList.value.length - 1];
 	}
 	noMsg.value = data.listLast;
