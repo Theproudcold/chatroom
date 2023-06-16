@@ -17,6 +17,14 @@ export function register(user) {
 		data: user,
 	});
 }
+// 获取邮箱验证码
+export function sendEmailCode(user) {
+	return request({
+		url: `${BASE_URL}/sendEmailCode`,
+		method: "post",
+		data: user,
+	});
+}
 // 修改用户信息
 export function updataUserInfo(userInfo) {
 	return request({

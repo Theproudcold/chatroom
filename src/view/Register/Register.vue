@@ -1,17 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { register } from "@/api/user";
+import { register, sendEmailCode } from "@/api/user";
 const router = useRouter();
 const msg = ref(""); //信息提示
 // 进行注册操作
 const goRegister = async () => {
 	if (user.value.userName == "" || user.value.password == "") {
 		msg.value = "不能输入空";
-		return;
-	}
-	if (user.value.password != rule.value) {
-		msg.value = "两次输入密码不正确";
 		return;
 	}
 	const res = await register(user.value);
@@ -34,8 +30,27 @@ const goLogin = () => {
 const user = ref({
 	userName: "",
 	password: "",
+	email: "",
+	code: "",
 });
-const rule = ref("");
+const timer = ref(60);
+const prohibit = ref(false);
+const getCode = () => {
+	timer.value = 60;
+	const Timing = () => {
+		if (timer.value > 0) {
+			setTimeout(function () {
+				timer.value--;
+				Timing(); // 递归调用cont函数
+			}, 1000);
+		} else {
+			prohibit.value = false;
+		}
+	};
+	prohibit.value = true;
+	// sendEmailCode(user.value);
+	Timing(); // 调用cont函数开始倒计时
+};
 </script>
 
 <template>
@@ -54,11 +69,25 @@ const rule = ref("");
 						class="inputs"
 						placeholder="请输入密码"
 						type="password" />
-					<input
-						v-model="rule"
-						class="inputs"
-						placeholder="请再次输入密码"
-						type="password" />
+					<div class="emil">
+						<input
+							v-model="user.email"
+							class="inputs"
+							placeholder="请输入邮箱"
+							type="text" />
+						<input
+							v-model="user.code"
+							class="inputs"
+							placeholder="请输入验证码"
+							type="text" />
+						<button
+							class="code"
+							@click="getCode"
+							:disabled="prohibit"
+							:class="{ prohibit: prohibit }">
+							{{ prohibit ? timer : "点我发送验证码" }}
+						</button>
+					</div>
 					<p class="msg" v-if="msg">{{ msg }}</p>
 					<div class="button" @click="goRegister">
 						<i class="iconfont icon-youjiantou"></i>
@@ -113,6 +142,21 @@ const rule = ref("");
 			background-color: transparent;
 			border-bottom: 0.0625rem solid $fontColor !important;
 		}
+		.emil {
+			position: relative;
+			.code {
+				position: absolute;
+				bottom: 22px;
+				right: 2px;
+				cursor: pointer;
+				color: $secondaryColor;
+				border: none;
+				background-color: transparent;
+			}
+			.prohibit {
+				color: rgba($secondaryColor, 0.6);
+			}
+		}
 		.msg {
 			font-size: 0.875rem;
 			color: $errorColor;
@@ -127,7 +171,7 @@ const rule = ref("");
 		.button {
 			position: absolute;
 			right: 2.625rem;
-			bottom: 6.625rem;
+			bottom: 60px;
 			width: 4.25rem;
 			height: 4.25rem;
 			border-radius: 50%;
