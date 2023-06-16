@@ -1,18 +1,30 @@
 <script setup>
 import { mainStore } from "@/store/index";
-import { getMyDate } from "@/utils/data";
+import { getMyDate, getTimeStringAutoShort } from "@/utils/data";
 const store = mainStore();
 const id = store.user.id;
 const props = defineProps({
 	item: {
-		Type: Object,
+		type: Object,
+	},
+	lastTime: {
+		default: null,
 	},
 });
+const shouldShowTime = (time) => {
+	const currentTime = new Date(time);
+	const lastTime = new Date(props.lastTime);
+	if ((currentTime - lastTime) / 1000 > 300 || lastTime === null) {
+		return true;
+	} else {
+		return false;
+	}
+};
 </script>
 
 <template>
-	<div class="times">
-		{{ getMyDate(item.sendTime) }}
+	<div class="times" v-if="shouldShowTime(item.sendTime)">
+		{{ getTimeStringAutoShort(item.sendTime) }}
 	</div>
 	<div class="chat-item" :class="{ myselfe: id == item.userId }">
 		<div class="left">

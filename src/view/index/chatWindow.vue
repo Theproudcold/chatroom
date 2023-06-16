@@ -144,14 +144,14 @@ onBeforeUnmount(() => {
 	}
 });
 </script>
-
 <template>
 	<div class="chat-window">
 		<div class="content" ref="content1" @scroll="scroll">
 			<ChatItem
-				v-for="item in msgList"
+				v-for="(item, index) in msgList"
 				:item="item"
-				:key="item"></ChatItem>
+				:lastTime="index == 0 ? null : msgList[index - 1].sendTime"
+				:key="item.id" />
 		</div>
 		<div class="bottom">
 			<input
