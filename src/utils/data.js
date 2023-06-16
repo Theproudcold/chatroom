@@ -18,6 +18,7 @@ export function getFormatData() {
 }
 export function getFormatDataTime() {
 	const currentDate = new Date();
+	const year = currentDate.getFullYear();
 	let month = currentDate.getMonth() + 1;
 	let day = currentDate.getDate();
 	let hour = currentDate.getHours();
@@ -26,7 +27,7 @@ export function getFormatDataTime() {
 	day = day < 10 ? "0" + day : day;
 	hour = hour < 10 ? "0" + hour : hour;
 	minute = minute < 10 ? "0" + minute : minute;
-	return `${month}-${day} ${hour}:${minute}`;
+	return `${year}-${month}-${day} ${hour}:${minute}`;
 }
 export function getFormatDataTimeSecond() {
 	const currentDate = new Date();

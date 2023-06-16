@@ -63,9 +63,9 @@ const quit = () => {
 					<p class="description">{{ user.description }}</p>
 				</div>
 			</div>
-			<div class="button" @click="store.showRoomMask = true">
+			<!-- <div class="button" @click="store.showRoomMask = true">
 				<p>+ 新建聊天室</p>
-			</div>
+			</div> -->
 		</div>
 		<div class="content">
 			<RoomItem
@@ -178,6 +178,7 @@ const quit = () => {
 			cursor: pointer;
 			background-color: $secondaryColor;
 		}
+		margin-bottom: 5.25rem;
 	}
 
 	.content {

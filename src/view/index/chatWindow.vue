@@ -21,6 +21,7 @@ onBeforeRouteUpdate((to, from, next) => {
 	if (to.params.id !== from.params.id) {
 		roomsId.value = router.currentRoute.value.params.id;
 		getMsgList(1, roomsId.value);
+		scrollToBottom();
 	}
 	next();
 });
@@ -37,13 +38,14 @@ ws.onmessage = function (event) {
 	const obj = JSON.parse(event.data);
 	if (obj.type && obj.type == 1) {
 		const data = obj.data;
-		// 时间戳处理
-		data.sendTime = getMyDate(data.sendTime);
 		msgList.value.push(data);
+		data.sendTime = getMyDate(data.sendTime);
+		store.fastMsg = data;
+		console.log(store.fastMsg);
 	} else if (obj.type == 2 || obj.type == 3) {
 		getOnline();
 	} else if (obj.type == 4) {
-		return;
+		if (obj.status == "success") return;
 	}
 	console.log(obj);
 };
@@ -65,6 +67,8 @@ ws.onopen = function () {
 	sendHeartbeat();
 	// BUG:获取不到在线用户
 	getOnline();
+	store.online++;
+	store.onlineUser.push(store.user);
 };
 const getOnline = async () => {
 	const { data } = await onlineUsers();
