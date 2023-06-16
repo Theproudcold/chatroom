@@ -25,7 +25,6 @@ onBeforeRouteUpdate((to, from, next) => {
 	}
 	next();
 });
-
 // 获取房间id
 const roomsId = ref(router.currentRoute.value.params.id);
 const content1 = ref(null);
@@ -53,14 +52,7 @@ function handelOpen() {
 	sendHeartbeat();
 	getOnline(true);
 }
-// 发送心跳包
-function sendHeartbeat() {
-	ws.send(
-		JSON.stringify({
-			type: 4,
-		})
-	);
-}
+
 const msgList = ref([]);
 
 const getOnline = async (first) => {
@@ -74,14 +66,7 @@ const getOnline = async (first) => {
 		store.onlineUser.push(store.user);
 	}
 };
-// 更改为10秒
-let heartbeatInterval = setInterval(sendHeartbeat, 10000);
 const msg = ref("");
-// 监听连接关闭事件
-ws.addEventListener("close", () => {
-	console.log("服务器关闭");
-	clearInterval(heartbeatInterval);
-});
 function send() {
 	//发送消息
 	if (msg.value == "") {
