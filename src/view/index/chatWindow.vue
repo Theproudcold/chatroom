@@ -47,14 +47,6 @@ function handelMessage(event) {
 	}
 	console.log(obj);
 }
-function handelOpen() {
-	console.log("连接服务器成功");
-	sendHeartbeat();
-	getOnline(true);
-}
-
-const msgList = ref([]);
-
 const getOnline = async (first) => {
 	const { data } = await onlineUsers();
 	if (data != null) {
@@ -66,6 +58,13 @@ const getOnline = async (first) => {
 		store.onlineUser.push(store.user);
 	}
 };
+function handelOpen() {
+	console.log("连接服务器成功");
+	sendHeartbeat();
+}
+getOnline(true);
+const msgList = ref([]);
+
 const msg = ref("");
 function send() {
 	//发送消息
