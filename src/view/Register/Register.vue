@@ -33,9 +33,27 @@ const user = ref({
 	email: "",
 	code: "",
 });
+const getEmailCode = async () => {
+	const res = await sendEmailCode(user.value);
+	if (res.code == 400 || res.code == 402) {
+		msg.value = res.msg;
+	}
+	if (res.code == 200) {
+		ElMessage({
+			showClose: true,
+			message: "发送验证码成功",
+			type: "success",
+		});
+	}
+	console.log(res);
+};
 const timer = ref(60);
 const prohibit = ref(false);
 const getCode = () => {
+	if (user.value.email == "") {
+		msg.value = "请输入正确邮箱";
+		return;
+	}
 	timer.value = 60;
 	const Timing = () => {
 		if (timer.value > 0) {
@@ -48,7 +66,7 @@ const getCode = () => {
 		}
 	};
 	prohibit.value = true;
-	// sendEmailCode(user.value);
+	getEmailCode();
 	Timing(); // 调用cont函数开始倒计时
 };
 </script>
