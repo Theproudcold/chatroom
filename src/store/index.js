@@ -9,9 +9,7 @@ export const mainStore = defineStore("main", {
 		fastMsg: {},
 	}),
 	getters: {},
-	actions: {
-		addCount() {},
-	},
+	actions: {},
 	// 数据持久化
 	persist: {
 		enabled: true,

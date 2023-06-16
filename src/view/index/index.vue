@@ -1,10 +1,8 @@
 <script setup>
 import Menu from "@/components/menu.vue";
 import MemberItem from "@/components/memberItem.vue";
-import RoomItem from "@/components/RoomItem.vue";
 import { mainStore } from "@/store/index";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
 const router = useRouter();
 const store = mainStore();
 </script>

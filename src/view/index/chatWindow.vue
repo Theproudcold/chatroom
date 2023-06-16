@@ -1,6 +1,6 @@
 <script setup>
 import ChatItem from "@/components/chatItem.vue";
-import { nextTick, onBeforeUnmount, onMounted, ref, computed } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
@@ -78,17 +78,16 @@ function send() {
 		});
 		return;
 	}
-	const msg = {
+	const cache = {
 		nickname: store.user.nickname,
 		content: msg.value,
 		userId: user.id,
 		sendTime: getFormatDataTime(),
 		chatRoomId: roomsId.value,
 	};
-	ws.send(JSON.stringify(msg));
-	msgList.value.push(msg);
-	store.fastMsg = msg;
-	console.log(store.fastMsg, msg);
+	ws.send(JSON.stringify(cache));
+	msgList.value.push(cache);
+	store.fastMsg = cache;
 	msg.value = "";
 }
 // 监听滚动事件
@@ -128,6 +127,8 @@ const getMsgList = async (pageSize, roomsId) => {
 	msgList.value = msgList.value.sort((a, b) => {
 		return new Date(a.sendTime) - new Date(b.sendTime);
 	});
+	store.fastMsg = msgList.value[msgList.value.length - 1];
+	console.log(store.fastMsg);
 	noMsg.value = data.listLast;
 };
 onMounted(async () => {
