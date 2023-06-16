@@ -134,8 +134,9 @@ const getMsgList = async (pageSize, roomsId) => {
 		msgList.value[msgList.value.length - 1].sendTime
 	);
 	// TODO：优化逻辑显示
-	// BUG: 当聊天上滑加载时，会出现 NaN/NaN/NaN
-	msgstore.fastMsg = msgList.value[msgList.value.length - 1];
+	if (pageSize.value == 1) {
+		msgstore.fastMsg = msgList.value[msgList.value.length - 1];
+	}
 	noMsg.value = data.listLast;
 };
 onMounted(async () => {
