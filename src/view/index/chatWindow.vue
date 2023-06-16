@@ -128,6 +128,9 @@ const getMsgList = async (pageSize, roomsId) => {
 	pageSize == 1
 		? (msgList.value = data.message)
 		: msgList.value.unshift(...data.message);
+	msgList.value = msgList.value.sort((a, b) => {
+		return new Date(a.sendTime) - new Date(b.sendTime);
+	});
 	noMsg.value = data.listLast;
 };
 onMounted(async () => {
