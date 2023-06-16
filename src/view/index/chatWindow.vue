@@ -7,7 +7,7 @@ import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { messageList } from "@/api/message";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
-import { getFormatDataTime, getMyDate } from "@/utils/data";
+import { getFormatDataTime, getTimeStringAutoShort } from "@/utils/data";
 const store = mainStore();
 const msgstore = msgStore();
 const router = useRouter();
@@ -39,7 +39,7 @@ function handelMessage(event) {
 	if (obj.type && obj.type == 1) {
 		const data = obj.data;
 		msgList.value.push(data);
-		data.sendTime = getMyDate(data.sendTime);
+		data.sendTime = getTimeStringAutoShort(data.sendTime);
 		msgstore.fastMsg = data;
 		console.log(msgstore.fastMsg);
 	} else if (obj.type == 2 || obj.type == 3) {
@@ -89,6 +89,7 @@ function send() {
 	};
 	ws.send(JSON.stringify(cache));
 	msgList.value.push(cache);
+	cache.sendTime = getTimeStringAutoShort(cache.sendTime);
 	msgstore.fastMsg = cache;
 	msg.value = "";
 }
@@ -129,6 +130,10 @@ const getMsgList = async (pageSize, roomsId) => {
 	msgList.value = msgList.value.sort((a, b) => {
 		return new Date(a.sendTime) - new Date(b.sendTime);
 	});
+	msgList.value[msgList.value.length - 1].sendTime = getTimeStringAutoShort(
+		msgList.value[msgList.value.length - 1].sendTime
+	);
+	// TODO：优化逻辑显示
 	msgstore.fastMsg = msgList.value[msgList.value.length - 1];
 	console.log(msgstore.fastMsg);
 	noMsg.value = data.listLast;
