@@ -2,12 +2,14 @@
 import ChatItem from "@/components/chatItem.vue";
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
+import { msgStore } from "@/store/msg";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { messageList } from "@/api/message";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
 import { getFormatDataTime, getMyDate } from "@/utils/data";
 const store = mainStore();
+const msgstore = msgStore();
 const router = useRouter();
 // 判断登录状态
 const iflogin = () => {
@@ -38,8 +40,8 @@ function handelMessage(event) {
 		const data = obj.data;
 		msgList.value.push(data);
 		data.sendTime = getMyDate(data.sendTime);
-		store.fastMsg = data;
-		console.log(store.fastMsg);
+		msgstore.fastMsg = data;
+		console.log(msgstore.fastMsg);
 	} else if (obj.type == 2 || obj.type == 3) {
 		getOnline();
 	} else if (obj.type == 4) {
@@ -87,7 +89,7 @@ function send() {
 	};
 	ws.send(JSON.stringify(cache));
 	msgList.value.push(cache);
-	store.fastMsg = cache;
+	msgstore.fastMsg = cache;
 	msg.value = "";
 }
 // 监听滚动事件
@@ -127,8 +129,8 @@ const getMsgList = async (pageSize, roomsId) => {
 	msgList.value = msgList.value.sort((a, b) => {
 		return new Date(a.sendTime) - new Date(b.sendTime);
 	});
-	store.fastMsg = msgList.value[msgList.value.length - 1];
-	console.log(store.fastMsg);
+	msgstore.fastMsg = msgList.value[msgList.value.length - 1];
+	console.log(msgstore.fastMsg);
 	noMsg.value = data.listLast;
 };
 onMounted(async () => {

@@ -1,6 +1,6 @@
 <script setup>
 import { mainStore } from "@/store/index";
-import { getMyDate, getTimeStringAutoShort } from "@/utils/data";
+import { getTimeStringAutoShort } from "@/utils/data";
 const store = mainStore();
 const id = store.user.id;
 const props = defineProps({

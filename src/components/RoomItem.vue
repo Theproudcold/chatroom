@@ -1,4 +1,6 @@
 <script setup>
+import { msgStore } from "@/store/msg";
+const store = msgStore();
 const props = defineProps({
 	rooms: {
 		Type: Array,
@@ -21,9 +23,11 @@ const props = defineProps({
 		<div class="right">
 			<div class="header">
 				<div class="room-name">{{ rooms.roomName }}</div>
-				<div class="time">{{ time }}</div>
+				<div class="time">{{ store.fastMsg.sendTime }}</div>
 			</div>
-			<div class="content"><p>内容内容内容内容内容</p></div>
+			<div class="content">
+				<p>{{ store.fastMsg.content }}</p>
+			</div>
 		</div>
 	</div>
 </template>

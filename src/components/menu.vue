@@ -71,7 +71,6 @@ const quit = () => {
 			<RoomItem
 				v-for="item in rooms"
 				:rooms="item"
-				time="22:24"
 				:active="selectRooms == item.id"
 				@click="toRooms(item.id)"
 				:key="item.id"></RoomItem>
