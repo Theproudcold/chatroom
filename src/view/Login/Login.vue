@@ -1,15 +1,22 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { login } from "@/api/user";
-import { getUserInfo } from "@/utils/data";
+import { login, userInfo } from "@/api/user";
+import { mainStore } from "@/store";
 const router = useRouter();
+const store = mainStore();
 const msg = ref(""); //信息提示
 // 进行登录操作
 const user = ref({
 	userName: "",
 	password: "",
 });
+
+const getUserInfo = async () => {
+	const res = await userInfo();
+	store.user = res.data;
+};
+getUserInfo();
 const goLogin = async () => {
 	if (user.value.userName == "" || user.value.password == "") {
 		msg.value = "不能输入空";
@@ -31,8 +38,11 @@ const goLogin = async () => {
 			message: "登录成功",
 			type: "success",
 		});
-		getUserInfo();
-		router.push("/chat");
+		async function processUserAndNavigate() {
+			await getUserInfo();
+			await router.push("/chat");
+		}
+		processUserAndNavigate();
 	}
 };
 // 前往注册页
