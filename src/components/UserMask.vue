@@ -1,6 +1,7 @@
 <script setup>
 import { mainStore } from "@/store/index";
 import { updataUserInfo } from "@/api/user";
+import updataphoto from "./updataphoto.vue";
 import { ref } from "vue";
 const store = mainStore();
 // 退出
@@ -39,10 +40,7 @@ const keep = async () => {
 			</div>
 			<div class="modal-content">
 				<div class="user-avatar">
-					<div class="avatar">
-						<img src="" alt="" />
-					</div>
-					<p class="upload">点击上传头像</p>
+					<updataphoto></updataphoto>
 				</div>
 				<div class="user-name">
 					<p class="title">用户名</p>
@@ -92,26 +90,6 @@ const keep = async () => {
 				display: flex;
 				align-items: center;
 				margin: 1.3125rem 0 1.6875rem 0;
-				.avatar {
-					width: 3.625rem;
-					height: 3.625rem;
-					background: $userBgColor;
-					border-radius: 50%;
-					overflow: hidden;
-					img {
-						display: block;
-						width: 100%;
-						height: 100%;
-					}
-				}
-				.upload {
-					margin-left: 0.875rem;
-					height: 0.8125rem;
-					font-size: 0.625rem;
-					line-height: 0.8125rem;
-					letter-spacing: 0.1em;
-					color: $navFont;
-				}
 			}
 			.title {
 				height: 0.8125rem;

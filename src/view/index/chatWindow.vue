@@ -1,6 +1,6 @@
 <script setup>
 import ChatItem from "@/components/chatItem.vue";
-import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
 import { msgStore } from "@/store/msg";
 import { onlineUsers } from "@/api/user";
@@ -34,6 +34,8 @@ const content1 = ref(null);
 // WebSocket HTML5提供的内置对象
 const { user } = JSON.parse(localStorage.getItem("userInfo"));
 const ws = useWebSocket(handelOpen, handelMessage, user.id);
+const newMsg = ref(0);
+// 接收消息
 function handelMessage(event) {
 	const obj = JSON.parse(event.data);
 	if (obj.type && obj.type == 1) {
@@ -42,6 +44,13 @@ function handelMessage(event) {
 		data.sendTime = getTimeStringAutoShort(data.sendTime);
 		msgstore.fastMsg = data;
 		console.log(msgstore.fastMsg);
+		newMsg.value++;
+		if (slowMotion.value) {
+			console.log(1);
+			nextTick(() => {
+				scrollToBottom();
+			});
+		}
 	} else if (obj.type == 2 || obj.type == 3) {
 		getOnline();
 	} else if (obj.type == 4) {
@@ -114,6 +123,8 @@ function scrollToBottom(type) {
 		content1.value.style.scrollBehavior = "";
 	}
 }
+
+// 发送消息
 const sendMsg = () => {
 	send();
 	nextTick(() => {
@@ -153,6 +164,32 @@ onBeforeUnmount(() => {
 		ws.close();
 	}
 });
+onMounted(() => {
+	if (content1.value) {
+		content1.value.addEventListener("scroll", handleScroll);
+	}
+});
+
+onBeforeUnmount(() => {
+	if (content1.value) {
+		content1.value.removeEventListener("scroll", handleScroll);
+	}
+});
+const slowMotion = ref(false);
+function handleScroll() {
+	// content 列表元素的 scrollTop 和 scrollHeight 属性
+	if (content1.value.scrollHeight - content1.value.scrollTop < 489) {
+		newMsg.value = 0;
+	}
+	content1.value.scrollHeight - content1.value.scrollTop < 660
+		? (slowMotion.value = true)
+		: (slowMotion.value = false);
+}
+//
+const clearMsg = () => {
+	scrollToBottom(1);
+	newMsg.value = 0;
+};
 </script>
 <template>
 	<div class="chat-window">
@@ -162,6 +199,9 @@ onBeforeUnmount(() => {
 				:item="item"
 				:lastTime="index == 0 ? null : msgList[index - 1].sendTime"
 				:key="item.id" />
+			<div class="new-msg" v-if="newMsg != 0" @click="clearMsg">
+				<span>{{ newMsg }}</span>
+			</div>
 		</div>
 		<div class="bottom">
 			<input
@@ -197,6 +237,31 @@ onBeforeUnmount(() => {
 		&::-webkit-scrollbar-thumb {
 			background-color: #fff; /* 滚动条滑块颜色 */
 			border-radius: 0.3125rem; /* 滑块边框圆角 */
+		}
+		.new-msg {
+			position: absolute;
+			right: 54px;
+			bottom: 70px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			color: #fff;
+			background-color: $secondaryColor;
+			::after {
+				content: "";
+				position: absolute;
+				left: 50%;
+				bottom: -4px;
+				transform: translate(-50%, 0);
+				width: 0;
+				height: 0;
+				border-left: 10px solid transparent;
+				border-right: 10px solid transparent;
+				border-top: 10px solid $secondaryColor;
+			}
 		}
 	}
 	.bottom {
