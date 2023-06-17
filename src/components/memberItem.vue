@@ -25,6 +25,11 @@ const props = defineProps({
 		height: 1.625rem;
 		background: $userBgColor;
 		border-radius: 50%;
+		overflow: hidden;
+		img {
+			width: 100%;
+			height: 100%;
+		}
 	}
 	.name {
 		line-height: 2.875rem;

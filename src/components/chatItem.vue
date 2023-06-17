@@ -28,7 +28,7 @@ const shouldShowTime = (time) => {
 	</div>
 	<div class="chat-item" :class="{ myselfe: id == item.userId }">
 		<div class="left">
-			<img src="" alt="" />
+			<img :src="item.avatar" alt="" />
 		</div>
 		<div class="right">
 			<div class="header">{{ item.nickname }}</div>
@@ -71,6 +71,12 @@ const shouldShowTime = (time) => {
 		height: 2.6875rem;
 		border-radius: 50%;
 		background: $userBgColor;
+		overflow: hidden;
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
 	}
 	.right {
 		margin-left: 0.625rem;
