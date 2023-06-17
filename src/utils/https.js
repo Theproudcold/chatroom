@@ -1,8 +1,9 @@
 // axios 基础封装
 import axios from "axios";
+import { HTTP_ADDRESS } from "@/configs/index";
 // 创建axios实例
 const httpInstance = axios.create({
-	baseURL: "http://localhost",
+	baseURL: HTTP_ADDRESS,
 	timeout: 5000,
 });
 
