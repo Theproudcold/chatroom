@@ -16,7 +16,6 @@ const getUserInfo = async () => {
 	const res = await userInfo();
 	store.user = res.data;
 };
-getUserInfo();
 const goLogin = async () => {
 	if (user.value.userName == "" || user.value.password == "") {
 		msg.value = "不能输入空";
