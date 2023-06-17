@@ -82,6 +82,7 @@ function send() {
 	}
 	const cache = {
 		nickname: store.user.nickname,
+		avatar: store.user.avatar,
 		content: msg.value,
 		userId: user.id,
 		sendTime: getFormatDataTime(),
