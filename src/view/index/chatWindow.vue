@@ -91,7 +91,8 @@ function send() {
 		avatar: store.user.avatar,
 		content: msg.value,
 		userId: user.id,
-		sendTime: getFormatDataTime(),
+		location: user.location,
+		sendTime: Date.now(),
 		chatRoomId: roomsId.value,
 	};
 	ws.send(JSON.stringify(cache));
@@ -148,6 +149,7 @@ const getMsgList = async (pageSize, roomsId) => {
 		(localStorage.token = ""), (store.user = {}), router.push("/login");
 	}
 	const { data } = res;
+	console.log(data);
 	pageSize == 1
 		? (msgList.value = data.message)
 		: msgList.value.unshift(...data.message);

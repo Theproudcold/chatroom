@@ -32,8 +32,12 @@ const props = defineProps({
 		}
 	}
 	.name {
+		max-width: 9.375rem;
 		line-height: 2.875rem;
 		padding-left: 0.375rem;
+		white-space: nowrap; /* 防止换行 */
+		overflow: hidden; /* 溢出隐藏 */
+		text-overflow: ellipsis; /* 将溢出部分省略为省略号 */
 	}
 }
 </style>

@@ -82,7 +82,7 @@ const shouldShowTime = (time) => {
 	}
 	.right {
 		margin-left: 0.625rem;
-		max-width: 16rem;
+		max-width: 21rem;
 		.header {
 			height: 1rem;
 			font-size: 0.75rem;
