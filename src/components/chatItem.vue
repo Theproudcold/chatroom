@@ -31,7 +31,9 @@ const shouldShowTime = (time) => {
 			<img :src="item.avatar" alt="" />
 		</div>
 		<div class="right">
-			<div class="header">{{ item.nickname }}</div>
+			<div class="header">
+				{{ item.nickname }} <span>({{ item.location }})</span>
+			</div>
 			<div class="content">
 				<p>
 					{{ item.content }}

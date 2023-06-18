@@ -153,7 +153,7 @@ const getMsgList = async (pageSize, roomsId) => {
 	msgList.value = msgList.value.sort((a, b) => {
 		return new Date(a.sendTime) - new Date(b.sendTime);
 	});
-
+	console.log(msgList.value);
 	// TODO：优化逻辑显示
 	if (pageSize == 1) {
 		msgList.value[msgList.value.length - 1].sendTime =
@@ -245,7 +245,7 @@ const clearMsg = () => {
 		&::-webkit-scrollbar {
 			width: 0.5rem; /* 滚动条宽度 */
 			border-radius: 0.3125rem; /* 滚动条圆角 */
-			background-color: #000; /* 滚动条背景色 */
+			background-color: #fff; /* 滚动条背景色 */
 		}
 		&::-webkit-scrollbar-thumb {
 			background-color: #fff; /* 滚动条滑块颜色 */
