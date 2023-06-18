@@ -97,6 +97,7 @@ function send() {
 	};
 	ws.send(JSON.stringify(cache));
 	msgList.value.push(cache);
+	console.log(msgList.value);
 	cache.sendTime = getTimeStringAutoShort(cache.sendTime);
 	msgstore.fastMsg = cache;
 	msg.value = "";
@@ -114,6 +115,7 @@ const scroll = () => {
 			getMsgList(pageSize.value++, roomsId.value).then(() => {
 				loading.value = false;
 				nextTick(() => {
+					content1.value.style.scrollBehavior = "";
 					content1.value.scrollTop =
 						toscroll.value > 0
 							? content1.value.scrollHeight - toscroll.value
