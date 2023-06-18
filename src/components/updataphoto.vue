@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { HTTP_ADDRESS } from "@/configs/index";
+import { mainStore } from "@/store";
+const store = mainStore();
 const imageUrl = ref("");
 const token = ref({});
 token.value = {
@@ -8,7 +10,8 @@ token.value = {
 };
 const handleAvatarSuccess = (response, uploadFile) => {
 	imageUrl.value = URL.createObjectURL(uploadFile.raw);
-	console.log(imageUrl.value);
+	store.avatar = imageUrl.value;
+	console.log(store.avatar);
 };
 
 const beforeAvatarUpload = (rawFile) => {
