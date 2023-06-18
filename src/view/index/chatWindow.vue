@@ -160,11 +160,10 @@ const getMsgList = async (pageSize, roomsId) => {
 	});
 	// TODO：优化逻辑显示
 	if (pageSize == 1) {
-		msgList.value[msgList.value.length - 1].sendTime =
-			getTimeStringAutoShort(
-				msgList.value[msgList.value.length - 1].sendTime
-			);
 		msgstore.fastMsg = msgList.value[msgList.value.length - 1];
+		msgstore.fastMsg.sendTime = getTimeStringAutoShort(
+			msgstore.fastMsg.sendTime
+		);
 	}
 
 	noMsg.value = data.listLast;
