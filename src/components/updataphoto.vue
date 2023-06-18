@@ -10,10 +10,9 @@ token.value = {
 };
 const handleAvatarSuccess = (response, uploadFile) => {
 	imageUrl.value = URL.createObjectURL(uploadFile.raw);
-	store.avatar = imageUrl.value;
-	console.log(store.avatar);
+	store.avatar = response.data;
+	console.log(response);
 };
-
 const beforeAvatarUpload = (rawFile) => {
 	if (rawFile.type !== "image/jpeg") {
 		ElMessage.error("Avatar picture must be JPG format!");
