@@ -103,14 +103,26 @@ function send() {
 	msgstore.fastMsg = cache;
 	msg.value = "";
 }
+// loading
+const loading = ref(false);
 // 监听滚动事件
+const toscroll = ref(0);
+// 完美加载
 const scroll = () => {
 	if (content1.value.scrollTop === 0) {
-		// 已经滚动到了最顶部
-		// 处理逻辑
-		// TODO:优化逻辑
 		if (!noMsg.value) {
-			getMsgList(pageSize.value++, roomsId.value);
+			loading.value = true;
+			console.log(toscroll.value);
+			toscroll.value = content1.value.scrollHeight;
+			getMsgList(pageSize.value++, roomsId.value).then(() => {
+				loading.value = false;
+				nextTick(() => {
+					content1.value.scrollTop =
+						toscroll.value > 0
+							? content1.value.scrollHeight - toscroll.value
+							: 0;
+				});
+			});
 		}
 	}
 };
@@ -123,7 +135,6 @@ function scrollToBottom(type) {
 		content1.value.style.scrollBehavior = "";
 	}
 }
-
 // 发送消息
 const sendMsg = () => {
 	send();
@@ -149,9 +160,9 @@ const getMsgList = async (pageSize, roomsId) => {
 			getTimeStringAutoShort(
 				msgList.value[msgList.value.length - 1].sendTime
 			);
-		console.log(1);
 		msgstore.fastMsg = msgList.value[msgList.value.length - 1];
 	}
+
 	noMsg.value = data.listLast;
 };
 onMounted(async () => {
@@ -194,6 +205,7 @@ const clearMsg = () => {
 <template>
 	<div class="chat-window">
 		<div class="content" ref="content1" @scroll="scroll">
+			<p class="loading" v-if="loading">加载中</p>
 			<ChatItem
 				v-for="(item, index) in msgList"
 				:item="item"
@@ -225,6 +237,7 @@ const clearMsg = () => {
 	padding: 0.6875rem 1.1875rem;
 	.content {
 		height: 30.5rem;
+		padding-top: 0.625rem;
 		padding-bottom: 0.625rem;
 		padding-right: 0.625rem;
 		overflow-y: auto;
@@ -232,11 +245,18 @@ const clearMsg = () => {
 		&::-webkit-scrollbar {
 			width: 0.5rem; /* 滚动条宽度 */
 			border-radius: 0.3125rem; /* 滚动条圆角 */
-			background-color: #fff; /* 滚动条背景色 */
+			background-color: #000; /* 滚动条背景色 */
 		}
 		&::-webkit-scrollbar-thumb {
 			background-color: #fff; /* 滚动条滑块颜色 */
 			border-radius: 0.3125rem; /* 滑块边框圆角 */
+		}
+		.loading {
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translate(-50%, 0);
+			text-align: center;
 		}
 		.new-msg {
 			position: absolute;
