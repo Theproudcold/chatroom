@@ -43,10 +43,8 @@ function handelMessage(event) {
 		msgList.value.push(data);
 		data.sendTime = getTimeStringAutoShort(data.sendTime);
 		msgstore.fastMsg = data;
-		console.log(msgstore.fastMsg);
 		newMsg.value++;
 		if (slowMotion.value) {
-			console.log(1);
 			nextTick(() => {
 				scrollToBottom();
 			});
@@ -58,7 +56,6 @@ function handelMessage(event) {
 	} else {
 		(localStorage.token = ""), (store.user = {}), router.push("/login");
 	}
-	console.log(obj);
 }
 const getOnline = async (first) => {
 	const { data } = await onlineUsers();
@@ -112,7 +109,6 @@ const scroll = () => {
 	if (content1.value.scrollTop === 0) {
 		if (!noMsg.value) {
 			loading.value = true;
-			console.log(toscroll.value);
 			toscroll.value = content1.value.scrollHeight;
 			getMsgList(pageSize.value++, roomsId.value).then(() => {
 				loading.value = false;
@@ -146,14 +142,18 @@ const pageSize = ref(2);
 const noMsg = ref(false);
 // TODO:获取每个房间的最新消息
 const getMsgList = async (pageSize, roomsId) => {
-	const { data } = await messageList(pageSize, roomsId);
+	const res = await messageList(pageSize, roomsId);
+	// 验证过期，退出登录
+	if ((res.code == 402) | (res.code == 400)) {
+		(localStorage.token = ""), (store.user = {}), router.push("/login");
+	}
+	const { data } = res;
 	pageSize == 1
 		? (msgList.value = data.message)
 		: msgList.value.unshift(...data.message);
 	msgList.value = msgList.value.sort((a, b) => {
 		return new Date(a.sendTime) - new Date(b.sendTime);
 	});
-	console.log(msgList.value);
 	// TODO：优化逻辑显示
 	if (pageSize == 1) {
 		msgList.value[msgList.value.length - 1].sendTime =
