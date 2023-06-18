@@ -10,7 +10,7 @@ token.value = {
 };
 const handleAvatarSuccess = (response, uploadFile) => {
 	imageUrl.value = URL.createObjectURL(uploadFile.raw);
-	store.avatar = response.data;
+	store.user.avatar = response.data;
 	console.log(response);
 };
 const beforeAvatarUpload = (rawFile) => {
