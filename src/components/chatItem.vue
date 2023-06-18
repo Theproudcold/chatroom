@@ -100,6 +100,7 @@ const shouldShowTime = (time) => {
 		border-radius: 1.3125rem;
 		border-top-left-radius: 0;
 		p {
+			width: auto;
 			word-wrap: break-word;
 		}
 	}
