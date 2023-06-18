@@ -40,6 +40,7 @@ const keep = async () => {
 			</div>
 			<div class="modal-content">
 				<div class="user-avatar">
+					<p class="title">头像</p>
 					<updataphoto></updataphoto>
 				</div>
 				<div class="user-name">

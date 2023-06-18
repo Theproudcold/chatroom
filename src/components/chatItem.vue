@@ -47,6 +47,7 @@ const shouldShowTime = (time) => {
 .myselfe {
 	flex-direction: row-reverse;
 	.right {
+		align-items: flex-end;
 		margin-left: 0;
 		margin-right: 0.625rem;
 		.header {
@@ -80,29 +81,32 @@ const shouldShowTime = (time) => {
 			height: 100%;
 		}
 	}
-	.right {
-		margin-left: 0.625rem;
-		max-width: 21rem;
-		.header {
-			height: 1rem;
-			font-size: 0.75rem;
-			line-height: 1rem;
-			margin-bottom: 0.375rem;
-			letter-spacing: 0.2em;
-			color: $fontColor;
-		}
-	}
-	// 提到外边，减少层级，方便覆盖
-	.content {
-		background-color: $thirdColor;
-		padding: 1.25rem;
+}
+// 提到外边，减少层级，方便覆盖
+.right {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-left: 0.625rem;
+	max-width: 21rem;
+	.header {
+		height: 1rem;
+		font-size: 0.75rem;
+		line-height: 1rem;
+		margin-bottom: 0.375rem;
+		letter-spacing: 0.2em;
 		color: $fontColor;
-		border-radius: 1.3125rem;
-		border-top-left-radius: 0;
-		p {
-			width: auto;
-			word-wrap: break-word;
-		}
+	}
+}
+.content {
+	padding: 1.25rem;
+	color: $fontColor;
+	background-color: $thirdColor;
+	border-radius: 1.3125rem;
+	border-top-left-radius: 0;
+	p {
+		display: inline-block;
+		word-wrap: break-word;
 	}
 }
 </style>
