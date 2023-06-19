@@ -14,7 +14,7 @@ const props = defineProps({
 const shouldShowTime = (time) => {
 	const currentTime = new Date(time);
 	const lastTime = new Date(props.lastTime);
-	if ((currentTime - lastTime) / 1000 > 300 || lastTime === null) {
+	if ((currentTime - lastTime) / 1000 > 180 || lastTime === null) {
 		return true;
 	} else {
 		return false;
@@ -63,15 +63,16 @@ const shouldShowTime = (time) => {
 }
 .times {
 	width: 100%;
+	padding: 0.625rem;
 	text-align: center;
-	font-size: 0.875rem;
+	font-size: 0.75rem;
 }
 .chat-item {
 	margin-top: 1.5rem;
 	display: flex;
 	.left {
-		width: 2.6875rem;
-		height: 2.6875rem;
+		width: 40px;
+		height: 40px;
 		border-radius: 50%;
 		background: $userBgColor;
 		overflow: hidden;
@@ -90,7 +91,7 @@ const shouldShowTime = (time) => {
 	margin-left: 0.625rem;
 	max-width: 21rem;
 	.header {
-		height: 1rem;
+		height: 18px;
 		font-size: 0.75rem;
 		line-height: 1rem;
 		margin-bottom: 0.375rem;
@@ -99,12 +100,15 @@ const shouldShowTime = (time) => {
 	}
 }
 .content {
-	padding: 1.25rem;
+	padding: 6px 8px;
 	color: $fontColor;
 	background-color: $thirdColor;
 	border-radius: 1.3125rem;
 	border-top-left-radius: 0;
 	p {
+		font-size: 12px;
+		line-height: 38px;
+		height: 38px;
 		display: inline-block;
 		word-wrap: break-word;
 	}
