@@ -1,6 +1,7 @@
 <script setup>
-import { msgStore } from "@/store/msg";
-const store = msgStore();
+import { mainStore } from "@/store";
+import { getTimeStringAutoShort } from "@/utils/data";
+const store = mainStore();
 const props = defineProps({
 	rooms: {
 		Type: Array,
@@ -23,7 +24,7 @@ const props = defineProps({
 		<div class="right">
 			<div class="header">
 				<div class="room-name">{{ rooms.roomName }}</div>
-				<div class="time">{{ store.fastMsg.sendTime }}</div>
+				<div class="time">{{ getTimeStringAutoShort(time) }}</div>
 			</div>
 			<div class="content">
 				<p>{{ store.fastMsg.content }}</p>

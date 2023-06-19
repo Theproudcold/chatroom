@@ -1,15 +1,13 @@
 <script setup>
 import ChatItem from "@/components/chatItem.vue";
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
-import { msgStore } from "@/store/msg";
 import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { messageList } from "@/api/message";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
-import { getFormatDataTime, getTimeStringAutoShort } from "@/utils/data";
+import { getTimeStringAutoShort } from "@/utils/data";
 const store = mainStore();
-const msgstore = msgStore();
 const router = useRouter();
 // 判断登录状态
 const iflogin = () => {
@@ -41,8 +39,7 @@ function handelMessage(event) {
 	if (obj.type && obj.type == 1) {
 		const data = obj.data;
 		msgList.value.push(data);
-		data.sendTime = getTimeStringAutoShort(data.sendTime);
-		msgstore.fastMsg = data;
+		store.fastMsg = data;
 		newMsg.value++;
 		if (slowMotion.value) {
 			nextTick(() => {
@@ -97,9 +94,7 @@ function send() {
 	};
 	ws.send(JSON.stringify(cache));
 	msgList.value.push(cache);
-	console.log(msgList.value);
-	cache.sendTime = getTimeStringAutoShort(cache.sendTime);
-	msgstore.fastMsg = cache;
+	store.fastMsg = cache;
 	msg.value = "";
 }
 // loading
@@ -151,7 +146,6 @@ const getMsgList = async (pageSize, roomsId) => {
 		(localStorage.token = ""), (store.user = {}), router.push("/login");
 	}
 	const { data } = res;
-	console.log(data);
 	pageSize == 1
 		? (msgList.value = data.message)
 		: msgList.value.unshift(...data.message);
@@ -160,10 +154,7 @@ const getMsgList = async (pageSize, roomsId) => {
 	});
 	// TODO：优化逻辑显示
 	if (pageSize == 1) {
-		msgstore.fastMsg = msgList.value[msgList.value.length - 1];
-		msgstore.fastMsg.sendTime = getTimeStringAutoShort(
-			msgstore.fastMsg.sendTime
-		);
+		store.fastMsg = msgList.value[msgList.value.length - 1];
 	}
 
 	noMsg.value = data.listLast;

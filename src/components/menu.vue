@@ -1,12 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import UserMask from "@/components/UserMask.vue";
-import RoomrMask from "@/components/RoomMask.vue";
 import { mainStore } from "@/store/index";
 import { userInfo } from "@/api/user";
 import { Rooms } from "@/api/rooms";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
 const store = mainStore();
 const user = ref({});
@@ -72,6 +70,7 @@ const quit = () => {
 				v-for="item in rooms"
 				:rooms="item"
 				:active="selectRooms == item.id"
+				:time="store.fastMsg.sendTime"
 				@click="toRooms(item.id)"
 				:key="item.id"></RoomItem>
 		</div>
