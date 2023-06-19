@@ -100,7 +100,7 @@ const shouldShowTime = (time) => {
 	}
 }
 .content {
-	min-width: 20px;
+	min-width: 80px;
 	padding: 6px 8px;
 	color: $fontColor;
 	background-color: $thirdColor;

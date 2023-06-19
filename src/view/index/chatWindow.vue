@@ -214,6 +214,7 @@ const clearMsg = () => {
 				v-model="msg"
 				class="inputs"
 				placeholder="聊天时请注意文明用语"
+				maxlength="200"
 				@keyup.enter="sendMsg"
 				type="text" />
 			<div class="button" @click="sendMsg">
