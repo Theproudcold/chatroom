@@ -77,7 +77,7 @@ const goRegister = () => {
 			<div class="right">
 				<div class="info">
 					<p class="welcome">欢迎使用</p>
-					<h4 class="title">“庆海”聊天室</h4>
+					<h4 class="title">wfitChat</h4>
 				</div>
 				<img src="../../assets/images/bg.png" alt="" />
 			</div>
