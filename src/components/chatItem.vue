@@ -100,13 +100,13 @@ const shouldShowTime = (time) => {
 	}
 }
 .content {
+	min-width: 20px;
 	padding: 6px 8px;
 	color: $fontColor;
 	background-color: $thirdColor;
 	border-radius: 1.3125rem;
 	border-top-left-radius: 0;
 	p {
-		min-width: 20px;
 		font-size: 12px;
 		line-height: 38px;
 		height: 38px;
