@@ -8,9 +8,20 @@ const store = mainStore();
 const closure = () => {
 	store.showUserMask = false;
 };
+const props = defineProps({
+	user: {
+		type: Object,
+	},
+});
 const emit = defineEmits(["upadta"]);
+const { nickname } = props.user;
+const { description } = props.user;
+console.log(props.user);
 const userInfo = ref({});
-userInfo.value = store.user;
+userInfo.value.avatar = props.user.avatar;
+userInfo.value.id = props.user.id;
+userInfo.value.nickname = nickname;
+userInfo.value.description = description;
 // 保存
 const keep = async () => {
 	const res = await updataUserInfo(userInfo.value);
@@ -49,7 +60,9 @@ const keep = async () => {
 				</div>
 				<div class="user-info">
 					<p class="title">个人简介</p>
-					<textarea v-model="userInfo.description"></textarea>
+					<textarea
+						v-model="userInfo.description"
+						maxlength="80"></textarea>
 				</div>
 			</div>
 			<div class="button myCenter" @click="keep"><p>保存</p></div>

@@ -78,7 +78,7 @@ const quit = () => {
 			<p><i class="iconfont icon-tuichu"></i>退出聊天室</p>
 		</div>
 		<RoomMask @upadta="upadataRoom"></RoomMask>
-		<UserMask @upadta="upadtaUser" :user="user"></UserMask>
+		<UserMask @upadta="upadtaUser" :user="store.user"></UserMask>
 	</div>
 </template>
 

@@ -11,7 +11,6 @@ token.value = {
 const handleAvatarSuccess = (response, uploadFile) => {
 	imageUrl.value = URL.createObjectURL(uploadFile.raw);
 	store.user.avatar = response.data;
-	console.log(response);
 };
 const beforeAvatarUpload = (rawFile) => {
 	if (rawFile.type !== "image/jpeg") {
@@ -35,9 +34,10 @@ const beforeAvatarUpload = (rawFile) => {
 		:on-success="handleAvatarSuccess"
 		:before-upload="beforeAvatarUpload">
 		<img v-if="imageUrl" :src="imageUrl" class="avatar" />
-		<el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+		<el-icon v-else class="avatar-uploader-icon"></el-icon>
 	</el-upload>
 </template>
+
 <style scoped>
 .avatar-uploader .avatar {
 	width: 78px;
