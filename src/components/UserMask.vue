@@ -16,7 +16,6 @@ const props = defineProps({
 const emit = defineEmits(["upadta"]);
 const { nickname } = props.user;
 const { description } = props.user;
-console.log(props.user);
 const userInfo = ref({});
 userInfo.value.avatar = props.user.avatar;
 userInfo.value.id = props.user.id;

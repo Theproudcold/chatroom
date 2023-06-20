@@ -45,7 +45,6 @@ const getEmailCode = async () => {
 			type: "success",
 		});
 	}
-	console.log(res);
 };
 const timer = ref(60);
 const prohibit = ref(false);

@@ -22,15 +22,10 @@ const goLogin = async () => {
 		return;
 	}
 	const res = await login(user.value);
-	console.log(res);
 	if (res.code == 400 || res.code == 402) {
 		msg.value = res.msg;
 	}
 	if (res.code == 200) {
-		// store.$patch((state) => {
-		// 	state.token = res.data.token;
-		// 	console.log(res.data.token);
-		// });
 		localStorage.setItem("token", res.data.token);
 		ElMessage({
 			showClose: true,

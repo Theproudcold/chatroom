@@ -16,8 +16,6 @@ const emit = defineEmits(["upadta"]);
 // 保存
 const keep = async () => {
 	const res = await newRooms(room.value);
-	console.log(room.value);
-	console.log(res);
 	if (res.code == 200) {
 		ElMessage({
 			showClose: true,
