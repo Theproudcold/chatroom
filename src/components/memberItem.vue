@@ -7,12 +7,14 @@ const props = defineProps({
 </script>
 
 <template>
-	<div class="member-item">
-		<div class="avatar">
-			<img :src="user.avatar" alt="" />
+	<transition name="showuser">
+		<div class="member-item">
+			<div class="avatar">
+				<img :src="user.avatar" alt="" />
+			</div>
+			<p class="name">{{ user.nickname }}</p>
 		</div>
-		<p class="name">{{ user.nickname }}</p>
-	</div>
+	</transition>
 </template>
 
 <style lang="scss" scoped>
@@ -38,6 +40,30 @@ const props = defineProps({
 		white-space: nowrap; /* 防止换行 */
 		overflow: hidden; /* 溢出隐藏 */
 		text-overflow: ellipsis; /* 将溢出部分省略为省略号 */
+	}
+}
+.showuser {
+	&-enter {
+		&-from {
+			opacity: 0;
+		}
+		&-active {
+			transition: all 0.3s ease-in;
+		}
+		&-to {
+			opacity: 1;
+		}
+	}
+	&-leave {
+		&-from {
+			opacity: 1;
+		}
+		&-active {
+			transition: all 0.3s ease-out;
+		}
+		&-to {
+			opacity: 0;
+		}
 	}
 }
 </style>
