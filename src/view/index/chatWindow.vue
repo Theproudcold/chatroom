@@ -6,7 +6,6 @@ import { onlineUsers } from "@/api/user";
 import { useWebSocket } from "@/utils/websocket";
 import { messageList } from "@/api/message";
 import { onBeforeRouteUpdate, useRouter } from "vue-router";
-import { getTimeStringAutoShort } from "@/utils/data";
 const store = mainStore();
 const router = useRouter();
 // 判断登录状态
@@ -60,10 +59,10 @@ const getOnline = async (first) => {
 		store.online = data.onlineNumber;
 		store.onlineUser = data.onlineUsers;
 	}
-	if (data == null || (data.onlineNumber == 1 && first)) {
-		store.online++;
-		store.onlineUser.push(store.user);
-	}
+	// if (data == null || (data.onlineNumber == 1 && first)) {
+	// 	store.online++;
+	// 	store.onlineUser.push(store.user);
+	// }
 };
 function handelOpen() {
 	console.log("连接服务器成功");
