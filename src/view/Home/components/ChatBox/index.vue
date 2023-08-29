@@ -1,5 +1,5 @@
 <script setup>
-import ChatItem from "@/components/chatItem.vue";
+import MsgItem from "./MsgItem/index.vue";
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { mainStore } from "@/store/index";
 import { onlineUsers } from "@/api/user";
@@ -196,34 +196,43 @@ const clearMsg = () => {
 };
 </script>
 <template>
-	<div class="chat-window">
-		<div class="content" ref="content1" @scroll="scroll">
-			<p class="loading" v-if="loading">加载中</p>
-			<ChatItem
-				v-for="(item, index) in msgList"
-				:item="item"
-				:lastTime="index == 0 ? null : msgList[index - 1].sendTime"
-				:key="item.id" />
-			<div class="new-msg" v-if="newMsg != 0" @click="clearMsg">
-				<span>{{ newMsg }}</span>
+	<div class="chat-box">
+		<div class="chat-window">
+			<div class="content" ref="content1" @scroll="scroll">
+				<p class="loading" v-if="loading">加载中</p>
+				<MsgItem
+					v-for="(item, index) in msgList"
+					:item="item"
+					:lastTime="index == 0 ? null : msgList[index - 1].sendTime"
+					:key="item.id" />
+				<div class="new-msg" v-if="newMsg != 0" @click="clearMsg">
+					<span>{{ newMsg }}</span>
+				</div>
 			</div>
-		</div>
-		<div class="bottom">
-			<input
-				v-model="msg"
-				class="inputs"
-				placeholder="聊天时请注意文明用语"
-				maxlength="200"
-				@keyup.enter="sendMsg"
-				type="text" />
-			<div class="button" @click="sendMsg">
-				<i class="iconfont icon-icon"></i>
+			<div class="bottom">
+				<input
+					v-model="msg"
+					class="inputs"
+					placeholder="聊天时请注意文明用语"
+					maxlength="200"
+					@keyup.enter="sendMsg"
+					type="text" />
+				<div class="button" @click="sendMsg">
+					<i class="iconfont icon-icon"></i>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
+.chat-box {
+	width: 37.125rem;
+	height: 35.1875rem;
+	margin: 0 1.375rem;
+	background-color: $mainColor;
+	border-radius: 1.25rem;
+}
 .chat-window {
 	width: 100%;
 	height: 100%;

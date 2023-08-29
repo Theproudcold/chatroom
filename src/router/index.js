@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Index from "@/view/index/index.vue";
+import HomeView from "@/view/Home/index.vue";
+import LoginView from "@/view/Login/Login.vue";
 const routes = [
 	{
 		path: "/",
@@ -8,13 +9,14 @@ const routes = [
 	{
 		path: "/chat",
 		name: "index",
-		component: Index,
-		redirect: "/chat/chatroom/1", // 添加重定向
+		component: HomeView,
+		redirect: "/chat/room/1", // 添加重定向
 		children: [
 			{
-				path: "chatroom/:id",
-				name: "chatroom",
-				component: () => import("@/view/index/chatWindow.vue"),
+				path: "room/:id",
+				name: "room",
+				component: () =>
+					import("@/view/Home/components/ChatBox/index.vue"),
 			},
 		],
 	},
@@ -26,7 +28,7 @@ const routes = [
 	{
 		path: "/login",
 		name: "login",
-		component: () => import("@/view/Login/Login.vue"),
+		component: LoginView,
 	},
 ];
 
