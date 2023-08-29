@@ -117,7 +117,10 @@ const getCode = () => {
 					<p class="welcome">欢迎使用</p>
 					<h4 class="title">wfitChat</h4>
 				</div>
-				<img src="../../assets/images/bg.png" alt="" />
+				<img
+					src="../../assets/images/bg.png"
+					alt=""
+					draggable="false" />
 			</div>
 		</div>
 	</div>
@@ -129,6 +132,7 @@ const getCode = () => {
 	width: 60%;
 	height: 100%;
 	background: $loginBgColor;
+	user-select: none;
 	.register {
 		position: absolute;
 		top: 50%;
@@ -222,6 +226,7 @@ const getCode = () => {
 	height: 100%;
 	position: relative;
 	background-color: $secondaryColor;
+	user-select: none;
 	&::before {
 		content: "";
 		background-color: $secondaryColor;
