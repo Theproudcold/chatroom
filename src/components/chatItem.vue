@@ -35,9 +35,7 @@ const shouldShowTime = (time) => {
 				{{ item.nickname }} <span>({{ item.location }})</span>
 			</div>
 			<div class="content">
-				<p>
-					{{ item.content }}
-				</p>
+				{{ item.content }}
 			</div>
 		</div>
 	</div>
@@ -55,7 +53,7 @@ const shouldShowTime = (time) => {
 		}
 		.content {
 			background-color: $secondaryColor;
-			border-radius: 1.3125rem;
+			border-radius: 1rem;
 			color: $mainColor;
 			border-top-right-radius: 0;
 		}
@@ -100,18 +98,13 @@ const shouldShowTime = (time) => {
 	}
 }
 .content {
-	padding: 8px 12px;
+	min-height: 1em;
+	padding: 0.5rem 0.75rem;
+	font-size: 0.9375rem;
+	line-height: 1.375rem;
 	color: $fontColor;
 	background-color: $thirdColor;
-	border-radius: 1.3125rem;
+	border-radius: 1rem;
 	border-top-left-radius: 0;
-	p {
-		min-width: 18px;
-		font-size: 12px;
-		line-height: 38px;
-		height: 38px;
-		display: inline-block;
-		word-wrap: break-word;
-	}
 }
 </style>
